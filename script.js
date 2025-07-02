@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize tour functionality
     initializeTour();
+    
+    // Initialize generation experience
+    initializeGenerationExperience();
 
     // Element selectors
     const tourStartButton = document.getElementById('tourStartButton');
@@ -1428,53 +1431,10 @@ function saveProjectSettings() {
     closeProjectSettings();
 }
 
-// Show delayed second message from Jasper
-function showDelayedJasperMessage() {
-    setTimeout(() => {
-        const existingJasperMessage = document.querySelector('.jasper-message-text');
-        if (!existingJasperMessage) return;
-        
-        // Create additional text paragraph (second message)
-        const additionalText = document.createElement('div');
-        additionalText.style.opacity = '0';
-        additionalText.style.transform = 'translateY(20px)';
-        additionalText.style.transition = 'all 0.5s ease';
-        additionalText.style.marginTop = '12px';
-        additionalText.innerHTML = `
-            This one's a fun example: Whisker & Tails' summer launch featuring limited-edition pet food flavors. The Product Marketer pulled together all the core assets for the campaign using Canvas.
-        `;
-        
-        existingJasperMessage.appendChild(additionalText);
-        
-        // Animate in
-        setTimeout(() => {
-            additionalText.style.opacity = '1';
-            additionalText.style.transform = 'translateY(0)';
-        }, 100);
 
-        // Add third delayed paragraph after another second
-        setTimeout(() => {
-            const thirdText = document.createElement('div');
-            thirdText.style.opacity = '0';
-            thirdText.style.transform = 'translateY(20px)';
-            thirdText.style.transition = 'all 0.5s ease';
-            thirdText.style.marginTop = '12px';
-            thirdText.innerHTML = `
-                Start the quick guide to discover tips on creating effective campaigns in Canvas.
-            `;
-            existingJasperMessage.appendChild(thirdText);
-            setTimeout(() => {
-                thirdText.style.opacity = '1';
-                thirdText.style.transform = 'translateY(0)';
-            }, 100);
-        }, 1000); // 1 second after the second paragraph
-    }, 1000); // 1 second delay for the second paragraph
-}
 
-// Initialize delayed message on page load
+// Initialize tour button on page load
 document.addEventListener('DOMContentLoaded', () => {
-    showDelayedJasperMessage();
-    
     // Add tour button click handler
     const tourButton = document.getElementById('tourStartButton');
     if (tourButton) {
@@ -2913,5 +2873,297 @@ function closeTour() {
     
     console.log('Tour closed by user');
 }
+
+// BUILD MODE FUNCTIONALITY
+let buildState = {
+    currentStep: 0,
+    completedSteps: [],
+    totalSteps: 5,
+    userData: {}
+};
+
+function initializeGenerationExperience() {
+    console.log('Initializing Campaign Generation Experience...');
+    
+    // Start the generation experience immediately
+    setTimeout(() => {
+        startGenerationExperience();
+    }, 500);
+}
+
+function startGenerationExperience() {
+    console.log('Starting generation experience...');
+    
+    // Clear any existing chat content
+    const chatContent = document.querySelector('.chat-content');
+    if (chatContent) {
+        chatContent.innerHTML = '';
+    }
+    
+    // Add user's project goal message
+    addUserMessage("The goal of this project is a summer-themed marketing push promoting Whisker & Tails' new limited-edition seasonal flavors like \"Grilled Salmon Picnic\" (for cats) and \"BBQ Chicken Feast\" (for dogs). The campaign encourages pet parents to create fun, memorable summer moments with their pets, showcasing these new flavors as part of the experience.");
+    
+    // Add Jasper's loading response after a short delay
+    setTimeout(() => {
+        addJasperLoadingMessage("Perfect! I'm creating your campaign brief based on your project goal...");
+        
+        // Start generating the campaign brief
+        setTimeout(() => {
+            generateCampaignBrief();
+        }, 2000);
+    }, 1000);
+}
+
+function addUserMessage(text) {
+    const chatContent = document.querySelector('.chat-content');
+    
+    const messageContainer = document.createElement('div');
+    messageContainer.className = 'user-message';
+    messageContainer.textContent = text;
+    
+    chatContent.appendChild(messageContainer);
+    chatContent.scrollTop = chatContent.scrollHeight;
+}
+
+function addJasperLoadingMessage(text) {
+    const chatContent = document.querySelector('.chat-content');
+    
+    const messageContainer = document.createElement('div');
+    messageContainer.className = 'jasper-message-container';
+    
+    messageContainer.innerHTML = `
+        <div class="jasper-header">
+            <div class="jasper-logo"></div>
+            <span class="jasper-name">Jasper</span>
+        </div>
+        <div class="jasper-message">
+            <div class="loading-spinner"></div>
+            ${text}
+        </div>
+    `;
+    
+    chatContent.appendChild(messageContainer);
+    chatContent.scrollTop = chatContent.scrollHeight;
+}
+
+function addJasperCompletionMessage(text) {
+    const chatContent = document.querySelector('.chat-content');
+    
+    const messageContainer = document.createElement('div');
+    messageContainer.className = 'jasper-message-container';
+    
+    messageContainer.innerHTML = `
+        <div class="jasper-header">
+            <div class="jasper-logo"></div>
+            <span class="jasper-name">Jasper</span>
+        </div>
+        <div class="jasper-message">
+            ${text}
+        </div>
+    `;
+    
+    chatContent.appendChild(messageContainer);
+    chatContent.scrollTop = chatContent.scrollHeight;
+}
+
+function generateCampaignBrief() {
+    console.log('Generating campaign brief...');
+    
+    // Show the campaign brief card immediately
+    const canvasContent = document.querySelector('.canvas-content');
+    if (canvasContent) {
+        canvasContent.style.opacity = '1';
+    }
+    
+    // Define the content sections
+    const contentSections = [
+        {
+            type: 'heading',
+            content: 'Overview'
+        },
+        {
+            type: 'paragraph',
+            content: 'Whisker & Tails, a premium pet food brand dedicated to providing wholesome, all-natural, human-grade ingredients, is launching the "Summer of Sniffs" campaign to celebrate summer with limited-edition seasonal flavors. The campaign will promote "Grilled Salmon Picnic" for cats and "BBQ Chicken Feast" for dogs. With eco-friendly packaging and vet-approved recipes, this initiative aligns with the brand\'s mission of delivering health-focused, joyful moments for pets and their parents.'
+        },
+        {
+            type: 'paragraph',
+            content: 'The campaign\'s core objective is to bring awareness and excitement to the seasonal launch while cultivating deeper engagement with pet owners through memorable summer experiences and user-generated content.'
+        },
+        {
+            type: 'heading',
+            content: 'Campaign Concept'
+        },
+        {
+            type: 'paragraph',
+            content: '"Summer of Sniffs" is a lighthearted and cheerful marketing campaign designed to inspire pet owners to treat their furry friends to delicious summer-inspired meals and adventures. The concept ties seasonal nostalgia to Whisker & Tails\' limited-edition flavors, driving product trial and fostering shareable moments online. Key visuals and messaging will reflect sunny, playful outdoor activities, tying the joy of summer to a pet\'s happy and healthy lifestyle—all starting with what\'s in their bowl.'
+        },
+        {
+            type: 'heading',
+            content: 'Goals'
+        },
+        {
+            type: 'list',
+            content: [
+                '<strong>Boost Awareness</strong><br>Introduce the limited-edition flavors across key channels, achieving a 25% increase in brand visibility by August 31, 2025.',
+                '<strong>Drive Engagement</strong><br>Grow Instagram engagement by 30% by encouraging UGC with hashtags like #SummerOfSniffs.',
+                '<strong>Increase Traffic</strong><br>Drive 15% more traffic to the Whisker & Tails website and blog by promoting summer-themed content.',
+                '<strong>Grow Product Trials</strong><br>Increase sales of seasonal flavors by 20% during the campaign period.'
+            ]
+        },
+        {
+            type: 'heading',
+            content: 'Target Audience'
+        },
+        {
+            type: 'paragraph',
+            content: 'The campaign targets pet parents who see their pets as family and prioritize high-quality nutrition.'
+        },
+        {
+            type: 'list',
+            content: [
+                '<strong>Demographics</strong><br>Age 25-44, Income $60K+, Urban and suburban pet owners in the US',
+                '<strong>Psychographics</strong><br>Value sustainability, quality ingredients, and their pets\' health. They enjoy documenting their pets\' lives and sharing moments on social media.',
+                '<strong>Motivations & Needs</strong><br>Providing their pets with the best care and nutrition. Creating memorable bonding moments. Finding trustworthy products that align with personal ethics (sustainability, vet approval).',
+                '<strong>Pain Points</strong><br>Difficulty finding tasty, nutrient-rich pet food. Concerns about artificial ingredients and packaging waste.'
+            ]
+        },
+        {
+            type: 'heading',
+            content: 'Key Messaging'
+        },
+        {
+            type: 'list',
+            content: [
+                '<strong>Primary Message</strong><br>Celebrate summer with wholesome, limited-edition meals for your furry friend. Treat them to flavors as vibrant as the season!',
+                '<strong>Secondary Message</strong><br>Vet-approved, health-focused recipes made from human-grade ingredients for shiny coats, good digestion, and boundless energy.',
+                '<strong>Eco-Friendly Focus</strong><br>You can feel good about every purchase—made with sustainability in mind, from the food to the packaging.'
+            ]
+        },
+        {
+            type: 'heading',
+            content: 'Channels and Tactics'
+        },
+        {
+            type: 'paragraph',
+            content: '<strong>Social Media</strong><br>Instagram-focused UGC contest (#SummerOfSniffs): Share photos or videos of your pet enjoying summer for a chance to win a supply of Whisker & Tails treats. Carousel posts highlighting the summer flavors and their benefits. Summer-themed graphics, such as checklists and playful imagery of pets enjoying outdoor adventures.'
+        },
+        {
+            type: 'paragraph',
+            content: '<strong>Website & Blog</strong><br>Blog post featuring "5 Fun Ways to Treat Your Pet This Summer (Starting with What\'s in Their Bowl)" to drive SEO traffic and keep readers engaged. Dedicated landing page for the "Summer of Sniffs" campaign to promote flavors and collect email leads.'
+        },
+        {
+            type: 'paragraph',
+            content: '<strong>Email Marketing</strong><br>Announce the seasonal launch with an engaging campaign email linked to the product page.'
+        },
+        {
+            type: 'heading',
+            content: 'Timeline'
+        },
+        {
+            type: 'list',
+            content: [
+                '<strong>Kickoff: June 15, 2025</strong><br>Finalize campaign creative and launch teaser social posts.',
+                '<strong>Launch: June 20, 2025</strong><br>Introduce flavors with posts, blog content, and paid ads.',
+                '<strong>Mid-Campaign: July 10, 2025</strong><br>Push UGC contest and engage with user content.',
+                '<strong>Wrap-Up: August 31, 2025</strong><br>Conclude with a summary post highlighting favorite user stories and campaign impact.'
+            ]
+        },
+        {
+            type: 'heading',
+            content: 'Deliverables'
+        },
+        {
+            type: 'list',
+            content: [
+                'Campaign brief (this document)',
+                'Blog post on summer pet treats and activities',
+                'Three Instagram post variants',
+                'Email campaign copy and design'
+            ]
+        },
+        {
+            type: 'heading',
+            content: 'Measurement and Reporting'
+        },
+        {
+            type: 'paragraph',
+            content: '<strong>KPIs:</strong> Instagram engagement rate, hashtag performance (#SummerOfSniffs), Website traffic from campaign landing page, Seasonal product sales uplift, UGC submissions'
+        },
+        {
+            type: 'paragraph',
+            content: '<strong>Reporting Schedule:</strong> Weekly campaign updates, final results evaluated by September 10, 2025.'
+        },
+        {
+            type: 'paragraph',
+            content: 'By connecting seasonal fun with wholesome, high-quality meals, Whisker & Tails\' "Summer of Sniffs" campaign will elevate the brand and turn summer into a time of joy for pets and their humans.'
+        }
+    ];
+    
+    // Start generating content
+    generateContentSections(contentSections);
+}
+
+function generateContentSections(sections) {
+    const briefContent = document.getElementById('briefContent');
+    let currentIndex = 0;
+    
+    function addNextSection() {
+        if (currentIndex >= sections.length) {
+            // All sections added, show completion message
+            setTimeout(() => {
+                // Remove the loading message and add completion message
+                const chatContent = document.querySelector('.chat-content');
+                const lastMessage = chatContent.lastElementChild;
+                if (lastMessage && lastMessage.classList.contains('jasper-message-container')) {
+                    lastMessage.remove();
+                }
+                
+                addJasperCompletionMessage("✅ Campaign brief generated! I've created a comprehensive strategy for your \"Summer of Sniffs\" campaign, including target audience analysis, key messaging, channels and timeline. What would you like to create next?");
+            }, 300);
+            return;
+        }
+        
+        const section = sections[currentIndex];
+        const element = createContentElement(section);
+        
+        // Add element to content
+        briefContent.appendChild(element);
+        
+        currentIndex++;
+        
+        // Add delay before next section based on type
+        const delay = section.type === 'heading' ? 300 : 
+                     section.type === 'paragraph' ? 600 : 
+                     800; // list
+        
+        setTimeout(addNextSection, delay);
+    }
+    
+    // Start the process
+    addNextSection();
+}
+
+function createContentElement(section) {
+    let element;
+    
+    if (section.type === 'heading') {
+        element = document.createElement('h4');
+        element.textContent = section.content;
+    } else if (section.type === 'paragraph') {
+        element = document.createElement('p');
+        element.innerHTML = section.content;
+    } else if (section.type === 'list') {
+        element = document.createElement('ul');
+        section.content.forEach(item => {
+            const li = document.createElement('li');
+            li.innerHTML = item;
+            element.appendChild(li);
+        });
+    }
+    
+    return element;
+}
+
+
 
 

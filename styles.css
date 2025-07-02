@@ -1185,6 +1185,8 @@ body {
     align-items: flex-start;
     width: 100%;
     gap: 40px;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
 }
 
 .canvas-content > .content-section {
@@ -1822,4 +1824,87 @@ body {
 
 .toolbar-btn svg {
     stroke: currentColor;
+}
+
+
+
+/* Project Container */
+.project-container {
+    padding: 24px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Canvas Header */
+.canvas-header {
+    margin-bottom: 32px;
+}
+
+.canvas-title {
+    display: flex;
+    align-items: center;
+}
+
+.canvas-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1F2937;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 50%;
+    border-top-color: #7c3aed;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Real-time Content Generation */
+.content-section {
+    opacity: 0;
+    animation: fadeInSection 0.3s ease-out forwards;
+}
+
+@keyframes fadeInSection {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+
+/* Smooth card height transition */
+.campaign-brief {
+    transition: height 0.3s ease-out;
+    min-height: 150px;
+}
+
+.campaign-brief .content-text {
+    transition: all 0.3s ease-out;
+}
+
+/* Sample Project Container Updates */
+.sample-project-container {
+    padding: 24px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 } 

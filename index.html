@@ -57,15 +57,7 @@
             
             <div class="chat-content">
                 <!-- Jasper Message -->
-                <div class="jasper-message-container">
-                    <div class="jasper-header">
-                        <div class="jasper-logo"></div>
-                        <span class="jasper-name">Jasper</span>
-                    </div>
-                    <div class="jasper-message-text">
-                        Hi Sarah – Here's a sample project for Marketing Campaigns.
-                    </div>
-                </div>
+
             </div>
             
             <div class="chat-input">
@@ -98,25 +90,74 @@
             <div class="canvas-viewport" id="canvasViewport">
                 <!-- Content Area -->
                 <div class="content-area">
-                    <!-- Sample Project Container -->
-                    <div class="sample-project-container">
-                        <div class="sample-project-header">
-                            <div class="sample-project-tag">
-                                <span>Sample Project</span>
-                            </div>
-                            <!-- Tour Start Button -->
-                            <div class="tour-start-button" id="tourStartButton">
-                                <span class="tour-icon" style="background:#222;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;margin-right:8px;">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="12" cy="12" r="12" fill="none"/>
-                                        <polygon points="7,5 20,12 7,19" fill="white"/>
-                                    </svg>
-                                </span>
-                                <span style="color:#222;font-size:18px;font-weight:500;">Tour</span>
+                    <!-- Project Container -->
+                    <div class="project-container">
+
+
+                        
+
+                        <!-- Sample Project Container -->
+                        <div class="sample-project-container" id="sampleProjectContainer" style="display: none;">
+                            <div class="sample-project-header">
+                                <div class="sample-project-tag">
+                                    <span>Sample Project</span>
+                                </div>
+                                <!-- Tour Start Button -->
+                                <div class="tour-start-button" id="tourStartButton">
+                                    <span class="tour-icon" style="background:#222;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;margin-right:8px;">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="12" cy="12" r="12" fill="none"/>
+                                            <polygon points="7,5 20,12 7,19" fill="white"/>
+                                        </svg>
+                                    </span>
+                                    <span style="color:#222;font-size:18px;font-weight:500;">Tour</span>
+                                </div>
                             </div>
                         </div>
                         
-                        <div class="canvas-content">
+                        <!-- Generated Canvas Content -->
+                        <div class="canvas-content" id="canvasContent">
+                            <!-- Campaign Brief Section (Generated) -->
+                            <section class="content-section">
+                                <div class="section-container project-brief">
+                                                                <div class="asset-card campaign-brief" id="generatedCampaignBrief">
+                                <div class="card-header">
+                                    <div class="card-header-left">
+                                        <button class="icon-btn">
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="1" y="1" width="12" height="12" rx="2" fill="#9CA3AF"/>
+                                            </svg>
+                                        </button>
+                                        <span class="card-title">Campaign Brief</span>
+                                    </div>
+                                    <div class="card-header-right">
+                                        <button class="icon-btn">
+                                            <svg viewBox="0 0 13 13" width="14" height="14">
+                                                <path d="M7.41667 5.08333L11.5 1M11.5 1H8M11.5 1V4.5M5.08333 7.41667L1 11.5M1 11.5H4.5M1 11.5L1 8" stroke="#374151" stroke-width="1.25" stroke-linecap="square"/>
+                                            </svg>
+                                        </button>
+                                        <button class="icon-btn">
+                                            <svg viewBox="0 0 3 12" width="14" height="14">
+                                                <circle cx="1.58333" cy="1.58333" r="0.58333" fill="#374151"/>
+                                                <circle cx="1.58333" cy="5.66667" r="0.58333" fill="#374151"/>
+                                                <circle cx="1.58333" cy="9.75" r="0.58333" fill="#374151"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Campaign Brief</h3>
+                                    <div class="content-text" id="briefContent">
+                                        <!-- Content will be generated dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Sample Mode Content (Existing) -->
+                        <div class="canvas-content" id="sampleContent" style="display: none;">
                             <!-- Campaign Brief Section -->
                             <section class="content-section">
                                 <div class="section-container project-brief">
@@ -517,7 +558,7 @@
                             </section>
                         </div> <!-- End canvas-content -->
                     </div> <!-- End Sample Project Container -->
-                </div>
+                </div> <!-- End Project Container -->
             </div>
         </div>
     </div>
