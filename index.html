@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Campaign - Canvas</title>
+    <link rel="stylesheet" href="styles.css?v=1734000029">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-left">
+            <button class="header-btn">
+                <svg viewBox="0 0 15 12" width="16" height="12">
+                    <path d="M2 4.66667H11C12.6569 4.66667 14 6.00981 14 7.66667C14 9.32352 12.6569 10.6667 11 10.6667H8M2 4.66667L4.66667 2M2 4.66667L4.66667 7.33333" stroke="#848291" stroke-width="1.5" stroke-linecap="square" fill="none"/>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="header-center">
+            <button class="header-title-btn" onclick="showProjectSettings()">
+                <span>Summer of Sniffs Campaign</span>
+                <svg viewBox="0 0 14 12" width="16" height="12">
+                    <path d="M1 3L9 3M9 3C9 4.10457 9.89543 5 11 5C12.1046 5 13 4.10457 13 3C13 1.89543 12.1046 1 11 1C9.89543 1 9 1.89543 9 3ZM5 8.33333L13 8.33333M5 8.33333C5 9.4379 4.10457 10.3333 3 10.3333C1.89543 10.3333 1 9.4379 1 8.33333C1 7.22876 1.89543 6.33333 3 6.33333C4.10457 6.33333 5 7.22876 5 8.33333Z" stroke="#848291" stroke-width="1.5" stroke-linecap="square" fill="none"/>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="header-right">
+            <div class="avatar-container">
+                <div class="avatar">DK</div>
+            </div>
+            <button class="share-btn">Share</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Chat Sidebar -->
+        <aside class="chat-sidebar">
+            <div class="chat-header">
+                <div class="chat-header-left">
+                </div>
+                
+                <div class="chat-title">
+                </div>
+                
+                <div class="chat-header-right">
+                    <button class="chat-icon-btn">
+                        <svg viewBox="0 0 16 16" width="16" height="16">
+                            <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="chat-content">
+                <!-- Jasper Message -->
+                <div class="jasper-message-container">
+                    <div class="jasper-header">
+                        <div class="jasper-logo"></div>
+                        <span class="jasper-name">Jasper</span>
+                    </div>
+                    <div class="jasper-message-text">
+                        Hi Sarah – Here's a sample project for Marketing Campaigns.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input">
+                <div class="input-container">
+                    <textarea class="input-field" placeholder="Ask Jasper anything..." rows="1"></textarea>
+                    <div class="input-actions">
+                        <div class="input-actions-left">
+                            <button class="input-btn" title="Add attachment">
+                                <svg viewBox="0 0 16 16" width="16" height="16">
+                                    <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                            </button>
+                            <button class="agents-btn">Agents</button>
+                        </div>
+                        <div class="input-actions-right">
+                            <button class="send-btn" title="Send message">
+                                <svg viewBox="0 0 16 16" width="16" height="16">
+                                    <path d="M2 8l12-4v8L2 8z" fill="currentColor"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Canvas Container -->
+        <div class="canvas-container" id="canvasContainer">
+            <!-- Canvas Viewport -->
+            <div class="canvas-viewport" id="canvasViewport">
+                <!-- Content Area -->
+                <div class="content-area">
+                    <!-- Sample Project Container -->
+                    <div class="sample-project-container">
+                        <div class="sample-project-header">
+                            <div class="sample-project-tag">
+                                <span>Sample Project</span>
+                            </div>
+                            <!-- Tour Start Button -->
+                            <div class="tour-start-button" id="tourStartButton">
+                                <span class="tour-icon" style="background:#222;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;margin-right:8px;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="12" fill="none"/>
+                                        <polygon points="7,5 20,12 7,19" fill="white"/>
+                                    </svg>
+                                </span>
+                                <span style="color:#222;font-size:18px;font-weight:500;">Tour</span>
+                            </div>
+                        </div>
+                        
+                        <div class="canvas-content">
+                            <!-- Campaign Brief Section -->
+                            <section class="content-section">
+                                <div class="section-container project-brief">
+                                    <div class="asset-card campaign-brief">
+                                        <div class="card-header">
+                                            <div class="card-header-left">
+                                                <button class="icon-btn">
+                                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <rect x="1" y="1" width="12" height="12" rx="2" fill="#9CA3AF"/>
+                                                    </svg>
+                                                </button>
+                                                <span class="card-title">Campaign Brief</span>
+                                            </div>
+                                            <div class="card-header-right">
+                                                <button class="icon-btn">
+                                                    <svg viewBox="0 0 13 13" width="14" height="14">
+                                                        <path d="M7.41667 5.08333L11.5 1M11.5 1H8M11.5 1V4.5M5.08333 7.41667L1 11.5M1 11.5H4.5M1 11.5L1 8" stroke="#374151" stroke-width="1.25" stroke-linecap="square"/>
+                                                    </svg>
+                                                </button>
+                                                <button class="icon-btn">
+                                                    <svg viewBox="0 0 3 12" width="14" height="14">
+                                                        <circle cx="1.58333" cy="1.58333" r="0.58333" fill="#374151"/>
+                                                        <circle cx="1.58333" cy="5.66667" r="0.58333" fill="#374151"/>
+                                                        <circle cx="1.58333" cy="9.75" r="0.58333" fill="#374151"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="card-content">
+                                            <h3>Campaign Brief</h3>
+                                            <div class="content-text">
+                                                <h4>Overview</h4>
+                                                <p>Whisker & Tails, a premium pet food brand dedicated to providing wholesome, all-natural, human-grade ingredients, is launching the "Summer of Sniffs" campaign to celebrate summer with limited-edition seasonal flavors. The campaign will promote "Grilled Salmon Picnic" for cats and "BBQ Chicken Feast" for dogs. With eco-friendly packaging and vet-approved recipes, this initiative aligns with the brand's mission of delivering health-focused, joyful moments for pets and their parents.</p>
+                                                <p>The campaign's core objective is to bring awareness and excitement to the seasonal launch while cultivating deeper engagement with pet owners through memorable summer experiences and user-generated content.</p>
+                                                
+                                                <h4>Campaign Concept</h4>
+                                                <p>"Summer of Sniffs" is a lighthearted and cheerful marketing campaign designed to inspire pet owners to treat their furry friends to delicious summer-inspired meals and adventures. The concept ties seasonal nostalgia to Whisker & Tails' limited-edition flavors, driving product trial and fostering shareable moments online. Key visuals and messaging will reflect sunny, playful outdoor activities, tying the joy of summer to a pet's happy and healthy lifestyle—all starting with what's in their bowl.</p>
+                                                
+                                                <h4>Goals</h4>
+                                                <ul>
+                                                    <li><strong>Boost Awareness</strong><br>Introduce the limited-edition flavors across key channels, achieving a 25% increase in brand visibility by August 31, 2025.</li>
+                                                    <li><strong>Drive Engagement</strong><br>Grow Instagram engagement by 30% by encouraging UGC with hashtags like #SummerOfSniffs.</li>
+                                                    <li><strong>Increase Traffic</strong><br>Drive 15% more traffic to the Whisker & Tails website and blog by promoting summer-themed content.</li>
+                                                    <li><strong>Grow Product Trials</strong><br>Increase sales of seasonal flavors by 20% during the campaign period.</li>
+                                                </ul>
+                                                
+                                                <h4>Target Audience</h4>
+                                                <p>The campaign targets pet parents who see their pets as family and prioritize high-quality nutrition.</p>
+                                                <ul>
+                                                    <li><strong>Demographics</strong><br>Age 25-44, Income $60K+, Urban and suburban pet owners in the US</li>
+                                                    <li><strong>Psychographics</strong><br>Value sustainability, quality ingredients, and their pets' health. They enjoy documenting their pets' lives and sharing moments on social media.</li>
+                                                    <li><strong>Motivations & Needs</strong><br>Providing their pets with the best care and nutrition. Creating memorable bonding moments. Finding trustworthy products that align with personal ethics (sustainability, vet approval).</li>
+                                                    <li><strong>Pain Points</strong><br>Difficulty finding tasty, nutrient-rich pet food. Concerns about artificial ingredients and packaging waste.</li>
+                                                </ul>
+                                                
+                                                <h4>Key Messaging</h4>
+                                                <ul>
+                                                    <li><strong>Primary Message</strong><br>Celebrate summer with wholesome, limited-edition meals for your furry friend. Treat them to flavors as vibrant as the season!</li>
+                                                    <li><strong>Secondary Message</strong><br>Vet-approved, health-focused recipes made from human-grade ingredients for shiny coats, good digestion, and boundless energy.</li>
+                                                    <li><strong>Eco-Friendly Focus</strong><br>You can feel good about every purchase—made with sustainability in mind, from the food to the packaging.</li>
+                                                </ul>
+                                                
+                                                <h4>Channels and Tactics</h4>
+                                                <p><strong>Social Media</strong><br>Instagram-focused UGC contest (#SummerOfSniffs): Share photos or videos of your pet enjoying summer for a chance to win a supply of Whisker & Tails treats. Carousel posts highlighting the summer flavors and their benefits. Summer-themed graphics, such as checklists and playful imagery of pets enjoying outdoor adventures.</p>
+                                                <p><strong>Website & Blog</strong><br>Blog post featuring "5 Fun Ways to Treat Your Pet This Summer (Starting with What's in Their Bowl)" to drive SEO traffic and keep readers engaged. Dedicated landing page for the "Summer of Sniffs" campaign to promote flavors and collect email leads.</p>
+                                                <p><strong>Email Marketing</strong><br>Announce the seasonal launch with an engaging campaign email linked to the product page.</p>
+                                                
+                                                <h4>Timeline</h4>
+                                                <ul>
+                                                    <li><strong>Kickoff: June 15, 2025</strong><br>Finalize campaign creative and launch teaser social posts.</li>
+                                                    <li><strong>Launch: June 20, 2025</strong><br>Introduce flavors with posts, blog content, and paid ads.</li>
+                                                    <li><strong>Mid-Campaign: July 10, 2025</strong><br>Push UGC contest and engage with user content.</li>
+                                                    <li><strong>Wrap-Up: August 31, 2025</strong><br>Conclude with a summary post highlighting favorite user stories and campaign impact.</li>
+                                                </ul>
+                                                
+                                                <h4>Deliverables</h4>
+                                                <ul>
+                                                    <li>Campaign brief (this document)</li>
+                                                    <li>Blog post on summer pet treats and activities</li>
+                                                    <li>Three Instagram post variants:
+                                                        <ul>
+                                                            <li>Carousel highlighting summer flavors</li>
+                                                            <li>UGC-style post featuring a dog licking an ice cube made from Whisker & Tails broth</li>
+                                                            <li>"Summer Checklist" graphic</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>Email campaign copy and design</li>
+                                                </ul>
+                                                
+                                                <h4>Measurement and Reporting</h4>
+                                                <p><strong>KPIs:</strong> Instagram engagement rate, hashtag performance (#SummerOfSniffs), Website traffic from campaign landing page, Seasonal product sales uplift, UGC submissions</p>
+                                                <p><strong>Reporting Schedule:</strong> Weekly campaign updates, final results evaluated by September 10, 2025.</p>
+                                                <p>By connecting seasonal fun with wholesome, high-quality meals, Whisker & Tails' "Summer of Sniffs" campaign will elevate the brand and turn summer into a time of joy for pets and their humans.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            
+                            <!-- Blog Post Section -->
+                            <section class="content-section">
+                                <div class="section-container">
+                                    <div id="tour-blog-post-card" class="asset-card landing-page">
+                                        <div class="card-header">
+                                            <div class="card-header-left">
+                                                <button class="icon-btn">
+                                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <rect x="1" y="1" width="12" height="12" rx="2" fill="#9CA3AF"/>
+                                                    </svg>
+                                                </button>
+                                                <span class="card-title">Blog Post</span>
+                                            </div>
+                                            <div class="card-header-right">
+                                                <button class="icon-btn">
+                                                    <svg viewBox="0 0 13 13" width="14" height="14">
+                                                        <path d="M7.41667 5.08333L11.5 1M11.5 1H8M11.5 1V4.5M5.08333 7.41667L1 11.5M1 11.5H4.5M1 11.5L1 8" stroke="#374151" stroke-width="1.25" stroke-linecap="square"/>
+                                                    </svg>
+                                                </button>
+                                                <button class="icon-btn">⋮</button>
+                                            </div>
+                                        </div>
+                                        <div class="card-content">
+                                            <h3>5 Fun Ways to Treat Your Pet This Summer</h3>
+                                            <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Cute dog and cat sitting together outdoors" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin: 16px 0;"/>
+                                            <div class="content-text">
+                                                <p>Summer is here, and your furry friend deserves to join the fun! At Whisker & Tails, we believe happy pets start with real, natural food. Our new seasonal flavors—"Grilled Salmon Picnic" for cats and "BBQ Chicken Feast" for dogs—bring the best of summer straight to their bowl.</p>
+                                                <p><strong>1. Upgrade Their Bowl With a Taste of Summer</strong><br>
+                                                Treat your pet to our limited-edition meals, made with all-natural, human-grade ingredients. For cats: "Grilled Salmon Picnic" is packed with Omega-3s for a shiny coat. For dogs: "BBQ Chicken Feast" delivers smoky, savory goodness for summer adventures.</p>
+                                                <p><strong>2. Plan a Pet-Friendly Picnic</strong><br>
+                                                Take mealtime outside! Pack a picnic with toys, a blanket, and their Whisker & Tails meal. Add vet-approved snacks like sliced cucumbers or frozen blueberries for a cool treat.</p>
+                                                <p><strong>3. Beat the Heat With Frozen Treats</strong><br>
+                                                Help your pet cool off with icy snacks: freeze "BBQ Chicken Feast" broth for dogs or "Grilled Salmon Picnic" with puréed pumpkin for cats. Supervise while they enjoy!</p>
+                                                <p><strong>4. Make a Splash With Water Fun</strong><br>
+                                                Many dogs love to cool off in the water. A small, durable kiddie pool can provide hours of fun in your backyard. For a simpler option, a run through the sprinklers can be just as exciting. Even cats can join in—try placing a few ice cubes in their water bowl for them to bat around.</p>
+                                                <p><strong>5. Introduce a New Summer Toy</strong><br>
+                                                Keep your pet mentally stimulated with a new toy. Look for durable chew toys that can be frozen for extra cooling relief for your dog. For cats, a new wand toy with colorful feathers can provide great indoor exercise and mimic a playful hunt.</p>
+                                                <p>Summer's all about joyful memories, and your pet deserves to be part of it. Treat them to Whisker & Tails' all-natural summer flavors—only here for a limited time. A healthy, happy pet is the best summer companion! 🌞🐾</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Social Media Assets Section -->
+                            <section class="content-section">
+                                <div class="section-tag">
+                                    <span class="tag-label">Social Media Assets</span>
+                                </div>
+                                <div class="section-container social-media">
+                                    <div class="asset-cards-row">
+                                        <div class="asset-card facebook-post">
+                                            <div class="card-header">
+                                                <div class="card-header-left">
+                                                    <button class="icon-btn">
+                                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <rect x="1" y="1" width="12" height="12" rx="2" fill="#9CA3AF"/>
+                                                        </svg>
+                                                    </button>
+                                                    <span class="card-title">Instagram Post 1</span>
+                                                </div>
+                                                <div class="card-header-right">
+                                                    <button class="icon-btn">
+                                                        <svg viewBox="0 0 13 13" width="14" height="14">
+                                                            <path d="M7.41667 5.08333L11.5 1M11.5 1H8M11.5 1V4.5M5.08333 7.41667L1 11.5M1 11.5H4.5M1 11.5L1 8" stroke="#374151" stroke-width="1.25" stroke-linecap="square"/>
+                                                        </svg>
+                                                    </button>
+                                                        <button class="icon-btn">⋮</button>
+                                                    </div>
+                                            </div>
+                                            <div class="card-content">
+                                                <p><strong>Post 1 - Product Spotlight Carousel</strong></p>
+                                                <p><strong>[Slide 1 - Title Card]</strong><br>
+                                                📣 Summer's in the Air—and It's in Their Bowl, Too! 🌞🐾<br>
+                                                Introducing Whisker & Tails' limited-edition flavors!</p>
+                                                <p><strong>[Slide 2 - Cats' Flavor]</strong><br>
+                                                🐱 Grilled Salmon Picnic<br>
+                                                Wholesome, natural goodness packed with Omega-3, so your cat can strut their shiny coat all summer long. 🐟✨<br>
+                                                🥗 Human-grade ingredients. Limited-time flavor.</p>
+                                                <p><strong>[Slide 3 - Dogs' Flavor]</strong><br>
+                                                🐶 BBQ Chicken Feast<br>
+                                                Smoky, savory, and made to fuel every fetch, zoomie, & tail wag. 🐕🔥<br>
+                                                🌿 Gut-supporting ingredients. Perfect summer vibes.</p>
+                                                <p><strong>[Slide 4 - Call-to-Action]</strong><br>
+                                                ⏳ These seasonal flavors are only here for a short time! Order now and make every meal a celebration.🐾<br>
+                                                👇 Tag us in your pet's happy summer moments!</p>
+                                                <p>#WholesomeForHappyPets #WhiskerAndTails #SummerFlavors #PetLovers</p>
+                                            </div>
+                                        </div>
+                                        <div class="asset-card instagram-post">
+                                            <div class="card-header">
+                                                <div class="card-header-left">
+                                                    <button class="icon-btn">
+                                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <rect x="1" y="1" width="12" height="12" rx="2" fill="#9CA3AF"/>
+                                                        </svg>
+                                                    </button>
+                                                    <span class="card-title">Instagram Post 2</span>
+                                                </div>
+                                                <div class="card-header-right">
+                                                    <button class="icon-btn">
+                                                        <svg viewBox="0 0 13 13" width="14" height="14">
+                                                            <path d="M7.41667 5.08333L11.5 1M11.5 1H8M11.5 1V4.5M5.08333 7.41667L1 11.5M1 11.5H4.5M1 11.5L1 8" stroke="#374151" stroke-width="1.25" stroke-linecap="square"/>
+                                                        </svg>
+                                                    </button>
+                                                    <button class="icon-btn">⋮</button>
+                                                </div>
+                                            </div>
+                                            <div class="card-content">
+                                                <p><strong>Post 2 - UGC-Inspired Post</strong></p>
+                                                <p>☀️🐾 How Are You Celebrating Summer with Your Pet? 🐾☀️</p>
+                                                <p>Here's a fun idea 🤩 Mix Whisker & Tails' rich flavors into your summer treats!</p>
+                                                <p>🐶 For dogs? Freeze "BBQ Chicken Feast" broth into ice cubes for a refreshingly tasty chew 🍖❄️.</p>
+                                                <p>🐱 For cats? Combine "Grilled Salmon Picnic" with a dollop of pumpkin and freeze—it's the purr-fect summer delight! 🎃🐟.</p>
+                                                <p>📸 Share your DIY pet treats and tag us—we can't wait to see your fur baby in action!</p>
+                                                <p>#WholesomeFlavorFun #DIYPetTreats #HappyPaws</p>
+                                            </div>
+                                        </div>
+                                        <div class="asset-card twitter-post">
+                                            <div class="card-header">
+                                                <div class="card-header-left">
+                                                    <button class="icon-btn">
+                                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <rect x="1" y="1" width="12" height="12" rx="2" fill="#9CA3AF"/>
+                                                        </svg>
+                                                    </button>
+                                                    <span class="card-title">Instagram Post 3</span>
+                                                </div>
+                                                <div class="card-header-right">
+                                                    <button class="icon-btn">
+                                                        <svg viewBox="0 0 13 13" width="14" height="14">
+                                                            <path d="M7.41667 5.08333L11.5 1M11.5 1H8M11.5 1V4.5M5.08333 7.41667L1 11.5M1 11.5H4.5M1 11.5L1 8" stroke="#374151" stroke-width="1.25" stroke-linecap="square"/>
+                                                        </svg>
+                                                    </button>
+                                                    <button class="icon-btn">⋮</button>
+                                                </div>
+                                            </div>
+                                            <div class="card-content">
+                                                <p><strong>Post 3 - Summer Checklist Graphic</strong></p>
+                                                <p>🎉🐾 🐕 SUMMER CHECKLIST 2025 🐈 🐾🎉<br>
+                                                ✅ Sniff a new trail<br>
+                                                ✅ Chase butterflies in the park<br>
+                                                ✅ Try Whisker & Tails' limited-edition flavors<br>
+                                                ✅ Splash around with furry friends<br>
+                                                ✅ Nap in the sun (post-meal, of course!) ☀️</p>
+                                                <p>🌟 🐾 Limited-time flavors Grilled Salmon Picnic & BBQ Chicken Feast are ready to make this summer the tastiest one yet! 🌟</p>
+                                                <p>🐾 Tap here to shop 👉 Link in bio! 👈<br>
+                                                Tag a friend who needs this checklist ❤️</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Website and Blog Section -->
+                            <section class="content-section website-section">
+                                <div class="section-tag">
+                                    <span class="tag-label">Website</span>
+                                </div>
+
+                                <div class="bulk-edit-toolbar" style="display: none;">
+                                    <button class="toolbar-btn">
+                                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                            <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="toolbar-btn">
+                                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="16 3 21 3 21 8"></polyline>
+                                            <line x1="4" y1="20" x2="21" y2="3"></line>
+                                            <polyline points="8 21 3 21 3 16"></polyline>
+                                            <line x1="15" y1="9" x2="20" y2="4"></line>
+                                            <line x1="3" y1="10" x2="9" y2="15"></line>
+                                        </svg>
+                                    </button>
+                                    <button class="toolbar-btn">
+                                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M12 3L8 8l4 5 4-5-4-5zM3 12l5 4 5-4-5-4-5 4z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="toolbar-btn">
+                                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M4 2v20h2V2zm14 0v20h2V2zM14 8h-4l-2 4 2 4h4l2-4-2-4z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="toolbar-btn">
+                                        <span style="font-size: 18px; font-weight: 500;">文A</span>
+                                    </button>
+                                </div>
+                                
+                                <div class="section-container website-blog">
+                                    <div class="asset-cards-row">
+                                        <div class="asset-card landing-page">
+                                            <div class="card-header">
+                                                <div class="card-header-left">
+                                                    <button class="icon-btn">
+                                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <rect x="1" y="1" width="12" height="12" rx="2" fill="#9CA3AF"/>
+                                                        </svg>
+                                                    </button>
+                                                    <span class="card-title">Website</span>
+                                                </div>
+                                                <div class="card-header-right">
+                                                    <button class="icon-btn">
+                                                        <svg viewBox="0 0 13 13" width="14" height="14">
+                                                            <path d="M7.41667 5.08333L11.5 1M11.5 1H8M11.5 1V4.5M5.08333 7.41667L1 11.5M1 11.5H4.5M1 11.5L1 8" stroke="#374151" stroke-width="1.25" stroke-linecap="square"/>
+                                                        </svg>
+                                                    </button>
+                                                        <button class="icon-btn">⋮</button>
+                                                    </div>
+                                            </div>
+                                            <div class="card-content">
+                                                <h3>Home Page</h3>
+                                                <div class="content-text">
+                                                    <p><strong>Wholesome Food for Happy Pets</strong><br>
+                                                    At Whisker & Tails, we create premium pet food with all-natural, human-grade ingredients. Our eco-friendly packaging and vet-approved recipes support your pet's health and happiness.<br>
+                                                    Try our new summer flavors—"Grilled Salmon Picnic" for cats and "BBQ Chicken Feast" for dogs. Shop now!<br>
+                                                    [Shop Now]</p>
+                                                    <h4>About Us</h4>
+                                                    <p>Pets are family. Our mission: wholesome food that helps them thrive. Every recipe is vet-approved and made with love for pets and the planet.<br>
+                                                    [Learn More About Us]</p>
+                                                    <h4>Products</h4>
+                                                    <p><strong>Seasonal Flavors</strong><br>
+                                                    Grilled Salmon Picnic (Cats): Omega-3s for shiny coats.<br>
+                                                    BBQ Chicken Feast (Dogs): Gut health and summer fun.<br>
+                                                    Limited time only!<br>
+                                                    [Shop Seasonal Flavors]</p>
+                                                    <p><strong>Why Choose Us?</strong><br>
+                                                    Human-grade ingredients. Vet-approved. Eco-friendly.<br>
+                                                    [Browse All Products]</p>
+                                                    <h4>Blog</h4>
+                                                    <p>Tips, recipes, and fun for you and your pet.<br>
+                                                    ✨ New: "5 Fun Ways to Treat Your Pet This Summer"<br>
+                                                    [Read the Blog]</p>
+                                                    <h4>Contact Us</h4>
+                                                    <p>Questions or feedback? We'd love to hear from you.<br>
+                                                    📞 1-800-555-TAIL<br>
+                                                    📧 hello@whiskerandtails.com<br>
+                                                    🖂 123 Whisker Lane, Petville, PA 18999<br>
+                                                    [Contact Us Now]<br>
+                                                    Instagram | Facebook | Twitter</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="asset-card landing-page">
+                                            <div class="card-header">
+                                                <div class="card-header-left">
+                                                    <button class="icon-btn">
+                                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <rect x="1" y="1" width="12" height="12" rx="2" fill="#9CA3AF"/>
+                                                        </svg>
+                                                    </button>
+                                                    <span class="card-title">Website 2</span>
+                                                </div>
+                                                <div class="card-header-right">
+                                                    <button class="icon-btn">
+                                                        <svg viewBox="0 0 13 13" width="14" height="14">
+                                                            <path d="M7.41667 5.08333L11.5 1M11.5 1H8M11.5 1V4.5M5.08333 7.41667L1 11.5M1 11.5H4.5M1 11.5L1 8" stroke="#374151" stroke-width="1.25" stroke-linecap="square"/>
+                                                        </svg>
+                                                    </button>
+                                                        <button class="icon-btn">⋮</button>
+                                                    </div>
+                                            </div>
+                                            <div class="card-content">
+                                                <h3>Home Page 2</h3>
+                                                <div class="content-text">
+                                                    <p><strong>Wholesome Food for Happy Pets</strong><br>
+                                                    At Whisker & Tails, we create premium pet food with all-natural, human-grade ingredients. Our eco-friendly packaging and vet-approved recipes support your pet's health and happiness.<br>
+                                                    Try our new summer flavors—"Grilled Salmon Picnic" for cats and "BBQ Chicken Feast" for dogs. Shop now!<br>
+                                                    [Shop Now]</p>
+                                                    <h4>About Us</h4>
+                                                    <p>Pets are family. Our mission: wholesome food that helps them thrive. Every recipe is vet-approved and made with love for pets and the planet.<br>
+                                                    [Learn More About Us]</p>
+                                                    <h4>Products</h4>
+                                                    <p><strong>Seasonal Flavors</strong><br>
+                                                    Grilled Salmon Picnic (Cats): Omega-3s for shiny coats.<br>
+                                                    BBQ Chicken Feast (Dogs): Gut health and summer fun.<br>
+                                                    Limited time only!<br>
+                                                    [Shop Seasonal Flavors]</p>
+                                                    <p><strong>Why Choose Us?</strong><br>
+                                                    Human-grade ingredients. Vet-approved. Eco-friendly.<br>
+                                                    [Browse All Products]</p>
+                                                    <h4>Blog</h4>
+                                                    <p>Tips, recipes, and fun for you and your pet.<br>
+                                                    ✨ New: "5 Fun Ways to Treat Your Pet This Summer"<br>
+                                                    [Read the Blog]</p>
+                                                    <h4>Contact Us</h4>
+                                                    <p>Questions or feedback? We'd love to hear from you.<br>
+                                                    📞 1-800-555-TAIL<br>
+                                                    📧 hello@whiskerandtails.com<br>
+                                                    🖂 123 Whisker Lane, Petville, PA 18999<br>
+                                                    [Contact Us Now]<br>
+                                                    Instagram | Facebook | Twitter</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div> <!-- End canvas-content -->
+                    </div> <!-- End Sample Project Container -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Canvas Controls -->
+    <div class="canvas-controls">
+        <button class="canvas-control-btn" id="resetView" title="Reset View">
+            <svg viewBox="0 0 16 16" width="16" height="16">
+                <path d="M8 2L8 6L12 2M8 14L8 10L4 14M2 8L6 8L2 4M14 8L10 8L14 12" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            </svg>
+        </button>
+        <button class="canvas-control-btn" id="zoomIn" title="Zoom In">
+            <svg viewBox="0 0 16 16" width="16" height="16">
+                <path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            </svg>
+        </button>
+        <button class="canvas-control-btn" id="zoomOut" title="Zoom Out">
+            <svg viewBox="0 0 16 16" width="16" height="16">
+                <path d="M3 8H13" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Zoom Level Indicator -->
+    <div class="zoom-level" id="zoomLevel">80%</div>
+
+    <!-- Floating Action Bar -->
+    <div class="action-bar">
+        <div class="action-btn jasper-btn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+            </svg>
+        </div>
+        <div class="action-btn cube-btn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M12.5 6.44L18.5 9.5v5l-6 3.5-6-3.5v-5l6-3.56M12 2L2 7v10l10 5 10-5V7L12 2z"/>
+            </svg>
+        </div>
+        <div class="action-btn search-btn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+        </div>
+        <div class="action-btn plus-btn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+        </div>
+    </div>
+
+    <script src="script.js?v=1734000029" defer></script>
+</body>
+</html> 
