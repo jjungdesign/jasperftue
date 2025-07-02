@@ -2196,7 +2196,7 @@ body {
     position: absolute;
     top: 60px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(calc(-50% - 50px));
     min-width: 260px;
     max-width: 340px;
     animation: none !important;
