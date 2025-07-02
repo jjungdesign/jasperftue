@@ -317,12 +317,11 @@ body {
 .jasper-message {
     background: #FFFFFF;
     color: #374151;
-    padding: 12px 16px;
+    padding: 0 16px 12px 0;
     border-radius: 4px 16px 16px 16px;
-    max-width: 85%;
+    width: 100%;
     font-size: 14px;
     line-height: 1.5;
-    border: 1px solid #E5E7EB;
 }
 
 .jasper-message ol,
@@ -350,6 +349,48 @@ body {
     line-height: 1.5;
     color: #000000;
     max-width: none;
+}
+
+/* Jasper Completion Message Component */
+.jasper-completion-message {
+    background: #FFFFFF;
+    padding: 0 16px 12px 0;
+    border-radius: 4px 16px 16px 16px;
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.completion-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.completion-checkmark {
+    width: 16px;
+    height: 16px;
+    background: #E5E7EB;
+    color: #4B5563;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: normal;
+    flex-shrink: 0;
+}
+
+.completion-title {
+    font-weight: 400;
+    color: #1F2937;
+    font-size: 14px;
+}
+
+.completion-description {
+    color: #374151;
+    line-height: 1.5;
 }
 
 /* Attachment Chips */
@@ -698,18 +739,12 @@ body {
     border: 1px solid #E5E7EB;
     border-radius: 12px;
     overflow: hidden;
-    transition: all 0.2s;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     cursor: default;
     width: 412px;
 }
 
-.asset-card:hover {
-    /* No hover effect */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    border-color: #E5E7EB;
-    transform: none;
-}
+/* Removed hover effect */
 
 .card-header {
     display: flex;
@@ -742,7 +777,6 @@ body {
     align-items: center;
     justify-content: center;
     color: #374151;
-    transition: all 0.2s;
 }
 
 .icon-btn:hover {
@@ -778,10 +812,15 @@ body {
 
 .campaign-brief .icon-btn {
     color: #374151;
+    transition: none !important;
 }
 
 .campaign-brief .icon-btn:hover {
     background-color: #E5E7EB;
+}
+
+.campaign-brief.selected {
+    border: 1px solid #3B82F6;
 }
 
 .campaign-brief h3 {
@@ -833,6 +872,24 @@ body {
 .tiktok-script {
     background: #FFFFFF;
     min-height: 260px;
+}
+
+/* Instagram Posts */
+.instagram-post {
+    min-height: 320px;
+}
+
+.instagram-post .content-text p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    color: #374151;
+    white-space: pre-line;
+}
+
+/* Spacing between campaign brief and Instagram posts */
+.social-media {
+    margin-left: 60px;
 }
 
 .tiktok-script {
@@ -1859,7 +1916,7 @@ body {
     height: 16px;
     border: 2px solid #e5e7eb;
     border-radius: 50%;
-    border-top-color: #7c3aed;
+    border-top-color: #6B7280;
     animation: spin 1s ease-in-out infinite;
 }
 
@@ -1891,14 +1948,271 @@ body {
 
 
 
-/* Smooth card height transition */
+/* Removed transitions to prevent hover movement */
 .campaign-brief {
-    transition: height 0.3s ease-out;
     min-height: 150px;
+    transition: none !important;
 }
 
-.campaign-brief .content-text {
-    transition: all 0.3s ease-out;
+.campaign-brief * {
+    transition: none !important;
+}
+
+/* Campaign Brief Generation Shimmer Effect */
+.campaign-brief.generating {
+    position: relative;
+    border: 2px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(90deg, 
+                    rgba(139, 92, 246, 0.3) 0%, 
+                    rgba(59, 130, 246, 0.4) 25%, 
+                    rgba(168, 85, 247, 0.3) 50%, 
+                    rgba(59, 130, 246, 0.4) 75%, 
+                    rgba(139, 92, 246, 0.3) 100%) border-box;
+    background-size: 200% 100%;
+    animation: shimmerBorder 2s linear infinite;
+}
+
+/* Instagram Posts Generation Shimmer Effect */
+.instagram-post.generating {
+    position: relative;
+    border: 2px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(90deg, 
+                    rgba(139, 92, 246, 0.3) 0%, 
+                    rgba(59, 130, 246, 0.4) 25%, 
+                    rgba(168, 85, 247, 0.3) 50%, 
+                    rgba(59, 130, 246, 0.4) 75%, 
+                    rgba(139, 92, 246, 0.3) 100%) border-box;
+    background-size: 200% 100%;
+    animation: shimmerBorder 2s linear infinite;
+}
+
+@keyframes shimmerBorder {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Project Settings Tooltip */
+.settings-tooltip-container {
+    position: fixed;
+    top: 65px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    pointer-events: auto;
+}
+
+.settings-tooltip {
+    position: relative;
+    min-width: 260px;
+    max-width: 340px;
+    animation: none !important;
+}
+
+.settings-tooltip .tooltip-arrow {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 10px;
+    height: 10px;
+    background: #262627;
+    border-radius: 2px;
+}
+
+/* Campaign Brief Edit Hotspot */
+.campaign-edit-hotspot {
+    position: fixed;
+    z-index: 2000;
+    pointer-events: auto;
+}
+
+.hotspot-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    background: #ff6b35;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 2s infinite;
+    pointer-events: none;
+}
+
+.hotspot-pulse::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: #ff6b35;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse-ring 2s infinite;
+    opacity: 0.7;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+@keyframes pulse-ring {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.8);
+        opacity: 0.3;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(2.5);
+        opacity: 0;
+    }
+}
+
+.campaign-edit-tooltip {
+    position: absolute;
+    top: -60px;
+    left: 80px;
+    min-width: 260px;
+    max-width: 340px;
+    animation: none !important;
+    z-index: 3000;
+}
+
+.campaign-edit-tooltip .tooltip-arrow {
+    position: absolute;
+    top: 50%;
+    left: -5px;
+    transform: translateY(-50%) rotate(45deg);
+    width: 10px;
+    height: 10px;
+    background: #262627;
+    border-radius: 2px;
+}
+
+/* Apps Automation Hotspot */
+.apps-automation-hotspot {
+    position: fixed;
+    z-index: 2000;
+    pointer-events: auto;
+}
+
+.apps-automation-hotspot .hotspot-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    background: #ff6b35;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 2s infinite;
+    pointer-events: none;
+}
+
+.apps-automation-hotspot .hotspot-pulse::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: #ff6b35;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse-ring 2s infinite;
+    opacity: 0.7;
+}
+
+.apps-automation-tooltip {
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 260px;
+    max-width: 340px;
+    animation: none !important;
+    z-index: 3000;
+}
+
+.apps-automation-tooltip .tooltip-arrow {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid white;
+}
+
+/* Share Button Hotspot */
+.share-button-hotspot {
+    position: fixed;
+    z-index: 2000;
+    pointer-events: auto;
+}
+
+.share-button-hotspot .hotspot-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    background: #ff6b35;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 2s infinite;
+    pointer-events: none;
+}
+
+.share-button-hotspot .hotspot-pulse::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: #ff6b35;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse-ring 2s infinite;
+    opacity: 0.7;
+}
+
+.share-button-tooltip {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 260px;
+    max-width: 340px;
+    animation: none !important;
+    z-index: 3000;
+}
+
+.share-button-tooltip .tooltip-arrow {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
 }
 
 /* Sample Project Container Updates */

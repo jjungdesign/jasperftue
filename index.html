@@ -35,6 +35,66 @@
         </div>
     </header>
 
+    <!-- Project Settings Tooltip -->
+    <div class="settings-tooltip-container" id="settingsHotspot" style="display: none;">
+        <div class="settings-tooltip tour-tooltip">
+            <div class="tooltip-arrow"></div>
+            <div class="tour-tooltip-content">
+                <button class="tour-tooltip-close" onclick="hideSettingsHotspot()">&times;</button>
+                            <div class="tour-tooltip-title">First draft made</div>
+            <div class="tour-tooltip-body">You can update your project goals, brand voice, audience, and all reference materials to automatically refresh your content.</div>
+                <div class="tour-tooltip-actions">
+                    <button class="tour-next-btn" onclick="hideSettingsHotspot()">Got it</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Campaign Brief Edit Hotspot -->
+    <div class="campaign-edit-hotspot" id="campaignEditHotspot" style="display: none;">
+        <div class="hotspot-pulse"></div>
+        <div class="campaign-edit-tooltip tour-tooltip">
+            <div class="tooltip-arrow"></div>
+            <div class="tour-tooltip-content">
+                <button class="tour-tooltip-close" onclick="hideCampaignEditHotspot()">&times;</button>
+                <div class="tour-tooltip-title">Select and create more</div>
+                <div class="tour-tooltip-body">Select an asset to drop into chat for editing or to generate more assets. This way, you can repurpose existing content to create additional pieces in seconds. Try it!</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Third Hotspot - Apps Automation -->
+    <div class="apps-automation-hotspot" id="appsAutomationHotspot" style="display: none;">
+        <div class="hotspot-pulse"></div>
+        <div class="apps-automation-tooltip tour-tooltip">
+            <div class="tooltip-arrow"></div>
+            <div class="tour-tooltip-content">
+                <button class="tour-tooltip-close" onclick="hideAppsAutomationHotspot()">&times;</button>
+                <div class="tour-tooltip-title">Automate repeatable tasks with +80 Apps</div>
+                <div class="tour-tooltip-body">Create your next asset – SEO optimized blog post – using an App, Jasper's marketing best practices already applied.</div>
+                <div class="tour-tooltip-actions">
+                    <button class="tour-next-btn" onclick="goToShareHotspot()">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fourth Hotspot - Share Button -->
+    <div class="share-button-hotspot" id="shareButtonHotspot" style="display: none;">
+        <div class="hotspot-pulse"></div>
+        <div class="share-button-tooltip tour-tooltip">
+            <div class="tooltip-arrow"></div>
+            <div class="tour-tooltip-content">
+                <button class="tour-tooltip-close" onclick="hideShareButtonHotspot()">&times;</button>
+                <div class="tour-tooltip-title">Share with your teammates</div>
+                <div class="tour-tooltip-body">Collaborate seamlessly by sharing your campaign with team members. Everyone can contribute, edit, and build upon your work together.</div>
+                <div class="tour-tooltip-actions">
+                    <button class="tour-next-btn" onclick="hideShareButtonHotspot()">Got it</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Container -->
     <div class="main-container">
         <!-- Chat Sidebar -->
@@ -120,7 +180,7 @@
                             <!-- Campaign Brief Section (Generated) -->
                             <section class="content-section">
                                 <div class="section-container project-brief">
-                                                                <div class="asset-card campaign-brief" id="generatedCampaignBrief">
+                                                                <div class="asset-card campaign-brief" id="generatedCampaignBrief" onclick="selectCampaignBrief()">
                                 <div class="card-header">
                                     <div class="card-header-left">
                                         <button class="icon-btn">

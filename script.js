@@ -69,9 +69,9 @@ document.addEventListener('DOMContentLoaded', function() {
 let isDragging = false;
 let startX = 0;
 let startY = 0;
-let currentX = 0;
-let currentY = 0;
-let scale = 0.8;
+let currentX = 400;
+let currentY = 200;
+let scale = 1.2;
 
 function initializeCanvas() {
     const canvasContainer = document.getElementById('canvasContainer');
@@ -211,9 +211,9 @@ function initializeCanvasControls() {
 }
 
 function resetCanvasView() {
-    currentX = 0;
-    currentY = 0;
-    scale = 0.8;
+    currentX = 400;
+    currentY = 200;
+    scale = 1.2;
     updateCanvasPosition();
     updateZoomLevel();
     showToast('View reset');
@@ -392,7 +392,10 @@ function initializeCards() {
         // Card click to expand
         card.addEventListener('click', function(e) {
             if (!e.target.closest('.icon-btn') && !isDragging) {
-                expandCard(this);
+                // Don't expand campaign brief - it has its own click handler
+                if (!this.classList.contains('campaign-brief')) {
+                    expandCard(this);
+                }
             }
         });
     });
@@ -596,29 +599,51 @@ function minimizeChat() {
 
 function sendMessage() {
     const input = document.querySelector('.input-field');
+    const campaignBriefPill = document.querySelector('.context-pill-demo');
+    
+    // Check if input has content or if placeholder content should be used
+    let message = '';
     if (input && input.value.trim()) {
-        const message = input.value.trim();
+        message = input.value.trim();
+    } else if (campaignBriefPill && input && input.placeholder) {
+        // Use placeholder text if no input and campaign brief is selected
+        message = input.placeholder;
+    }
+    
+    if (message) {
         console.log('Sending message:', message);
         
-        // Add message to chat (simulate)
-        addMessageToChat('You', message, false);
+        // Add message to chat
+        addMessageToChat('', message, false);
         
         // Clear input
-        input.value = '';
+        if (input) {
+            input.value = '';
+        }
         
-        // Simulate Jasper response
-        setTimeout(() => {
-            const responses = [
-                "I'll help you create that content right away!",
-                "Great idea! Let me work on that for you.",
-                "I can definitely help with that. Here's what I suggest...",
-                "Perfect! I'll generate that content based on your requirements."
-            ];
-            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-            addMessageToChat('Jasper', randomResponse, true);
-        }, 1000);
-        
-        showToast('Message sent to Jasper');
+        // Check if campaign brief pill is present - generate Instagram posts
+        if (campaignBriefPill) {
+            // Remove the campaign brief pill after sending
+            removeCampaignBriefPill();
+            
+            // Start Instagram post generation
+            setTimeout(() => {
+                addJasperLoadingMessage('Creating Instagram posts...');
+                generateInstagramPosts();
+            }, 500);
+        } else {
+            // Regular Jasper response for other messages
+            setTimeout(() => {
+                const responses = [
+                    "I'll help you create that content right away!",
+                    "Great idea! Let me work on that for you.",
+                    "I can definitely help with that. Here's what I suggest...",
+                    "Perfect! I'll generate that content based on your requirements."
+                ];
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                addMessageToChat('Jasper', randomResponse, true);
+            }, 1000);
+        }
     }
 }
 
@@ -666,15 +691,15 @@ function addMessageToChat(author, message, isJasper, isSubtle = false) {
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.5s ease;
-            ${isJasper ? 'background: #F8F9FA; margin-right: 20px;' : 'background: #0070EE; color: white; margin-left: 20px;'}
+            ${isJasper ? 'background: #F8F9FA; margin-right: 20px;' : 'background: #E5E7EB; color: #374151; margin-left: 20px; align-self: flex-end; border-radius: 16px 16px 4px 16px; padding: 12px 16px; max-width: 80%; font-size: 14px; line-height: 1.4;'}
         `;
         
         messageDiv.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                ${isJasper ? '<div class="jasper-avatar"></div>' : '<div style="width: 20px; height: 20px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #0070EE;">U</div>'}
-                <span style="font-size: 13px; font-weight: 600; ${isJasper ? 'color: #262627;' : 'color: white;'}">${author}</span>
-            </div>
-            <div style="font-size: 14px; line-height: 1.5; ${isJasper ? 'color: #6B7280;' : 'color: rgba(255, 255, 255, 0.9);'}">${message}</div>
+            ${author ? `<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                ${isJasper ? '<div class="jasper-avatar"></div>' : '<div style="width: 20px; height: 20px; background: #9CA3AF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: white;">U</div>'}
+                <span style="font-size: 13px; font-weight: 600; ${isJasper ? 'color: #262627;' : 'color: #374151;'}">${author}</span>
+            </div>` : ''}
+            <div style="font-size: 14px; line-height: 1.5; ${isJasper ? 'color: #6B7280;' : 'color: #374151;'}">${message}</div>
         `;
     }
     
@@ -1150,6 +1175,17 @@ function showAgentsMenu(button) {
 }
 
 function showProjectSettings() {
+    // Hide tooltips if they're visible
+    hideSettingsHotspot();
+    hideCampaignEditHotspot();
+    hideAppsAutomationHotspot();
+    hideShareButtonHotspot();
+    
+    // Show campaign edit hotspot after project settings opens
+    setTimeout(() => {
+        showCampaignEditHotspot();
+    }, 500);
+    
     // Check if modal is already open - if so, keep it open
     if (document.querySelector('.project-settings-modal')) {
         return;
@@ -1414,7 +1450,7 @@ function showProjectSettings() {
     };
     setTimeout(() => {
         document.addEventListener('click', handleClickOutside);
-    }, 100);
+    }, 10);
 }
 
 function closeProjectSettings() {
@@ -1935,6 +1971,11 @@ function addCampaignBriefPillToChat() {
 
     // Pill appears immediately without animation
 
+    // Update input field placeholder
+    if (inputField) {
+        inputField.placeholder = 'Create multiple Instagram posts with targeted messaging.';
+    }
+
     // Add click handler for the close button
     const closeBtn = pill.querySelector('span:last-child');
     if (closeBtn) {
@@ -1948,10 +1989,16 @@ function addCampaignBriefPillToChat() {
 function removeCampaignBriefPill() {
     const pill = document.querySelector('.context-pill-demo');
     const inputField = document.querySelector('.chat-input .input-field');
+    const campaignBrief = document.getElementById('generatedCampaignBrief');
     
     if (pill) {
         // Remove immediately without animation
         pill.remove();
+    }
+    
+    // Remove selected class from campaign brief
+    if (campaignBrief) {
+        campaignBrief.classList.remove('selected');
     }
     
     if (inputField) {
@@ -1963,6 +2010,9 @@ function removeCampaignBriefPill() {
         inputField.style.minHeight = '60px';
         inputField.style.fontSize = '14px'; // Keep consistent font size
         inputField.style.lineHeight = '1.5';
+        
+        // Reset placeholder
+        inputField.placeholder = 'Ask Jasper anything...';
     }
 }
 
@@ -2868,6 +2918,12 @@ function closeTour() {
         bulkEditToolbar.style.display = 'none';
     }
     
+    // Hide all hotspots
+    hideSettingsHotspot();
+    hideCampaignEditHotspot();
+    hideAppsAutomationHotspot();
+    hideShareButtonHotspot();
+    
     // Reset canvas position to default
     resetCanvasView();
     
@@ -2905,7 +2961,7 @@ function startGenerationExperience() {
     
     // Add Jasper's loading response after a short delay
     setTimeout(() => {
-        addJasperLoadingMessage("Perfect! I'm creating your campaign brief based on your project goal...");
+        addJasperLoadingMessage("Generating campaign brief...");
         
         // Start generating the campaign brief
         setTimeout(() => {
@@ -2946,7 +3002,7 @@ function addJasperLoadingMessage(text) {
     chatContent.scrollTop = chatContent.scrollHeight;
 }
 
-function addJasperCompletionMessage(text) {
+function addJasperCompletionMessage(statusText, descriptionText) {
     const chatContent = document.querySelector('.chat-content');
     
     const messageContainer = document.createElement('div');
@@ -2957,8 +3013,14 @@ function addJasperCompletionMessage(text) {
             <div class="jasper-logo"></div>
             <span class="jasper-name">Jasper</span>
         </div>
-        <div class="jasper-message">
-            ${text}
+        <div class="jasper-completion-message">
+            <div class="completion-status">
+                <div class="completion-checkmark">✓</div>
+                <span class="completion-title">${statusText}</span>
+            </div>
+            <div class="completion-description">
+                ${descriptionText}
+            </div>
         </div>
     `;
     
@@ -2973,6 +3035,12 @@ function generateCampaignBrief() {
     const canvasContent = document.querySelector('.canvas-content');
     if (canvasContent) {
         canvasContent.style.opacity = '1';
+    }
+    
+    // Add shimmer effect to campaign brief card
+    const campaignBriefCard = document.getElementById('generatedCampaignBrief');
+    if (campaignBriefCard) {
+        campaignBriefCard.classList.add('generating');
     }
     
     // Define the content sections
@@ -3111,6 +3179,12 @@ function generateContentSections(sections) {
         if (currentIndex >= sections.length) {
             // All sections added, show completion message
             setTimeout(() => {
+                // Remove shimmer effect from campaign brief card
+                const campaignBriefCard = document.getElementById('generatedCampaignBrief');
+                if (campaignBriefCard) {
+                    campaignBriefCard.classList.remove('generating');
+                }
+                
                 // Remove the loading message and add completion message
                 const chatContent = document.querySelector('.chat-content');
                 const lastMessage = chatContent.lastElementChild;
@@ -3118,7 +3192,15 @@ function generateContentSections(sections) {
                     lastMessage.remove();
                 }
                 
-                addJasperCompletionMessage("✅ Campaign brief generated! I've created a comprehensive strategy for your \"Summer of Sniffs\" campaign, including target audience analysis, key messaging, channels and timeline. What would you like to create next?");
+                addJasperCompletionMessage(
+                    "Generating campaign brief",
+                    `I've created a comprehensive strategy for your "Summer of Sniffs" campaign, including target audience analysis, key messaging, channels and timeline.<br><br>Next steps you might consider:<br>• Create multiple Instagram posts with targeted messaging that aligns with your campaign strategy<br>• Create a blog post using Jasper App`
+                );
+                
+                // Show the settings hotspot after a longer delay
+                setTimeout(() => {
+                    showSettingsHotspot();
+                }, 2500);
             }, 300);
             return;
         }
@@ -3132,9 +3214,9 @@ function generateContentSections(sections) {
         currentIndex++;
         
         // Add delay before next section based on type
-        const delay = section.type === 'heading' ? 300 : 
-                     section.type === 'paragraph' ? 600 : 
-                     800; // list
+        const delay = section.type === 'heading' ? 200 : 
+                     section.type === 'paragraph' ? 400 : 
+                     650; // list
         
         setTimeout(addNextSection, delay);
     }
@@ -3161,8 +3243,575 @@ function createContentElement(section) {
         });
     }
     
-    return element;
+        return element;
 }
+
+function showSettingsHotspot() {
+    console.log('Showing settings tooltip...');
+    
+    const tooltipContainer = document.getElementById('settingsHotspot');
+    if (tooltipContainer) {
+        tooltipContainer.style.display = 'block';
+    }
+}
+
+function hideSettingsHotspot() {
+    console.log('Hiding settings tooltip...');
+    
+    const tooltipContainer = document.getElementById('settingsHotspot');
+    if (tooltipContainer) {
+        tooltipContainer.style.display = 'none';
+        
+        // Show campaign edit hotspot after settings tooltip is dismissed
+        setTimeout(() => {
+            showCampaignEditHotspot();
+        }, 500);
+    }
+}
+
+
+
+function showCampaignEditHotspot() {
+    console.log('Showing campaign edit hotspot...');
+    
+    const hotspot = document.getElementById('campaignEditHotspot');
+    const campaignBrief = document.getElementById('generatedCampaignBrief');
+    const canvasViewport = document.querySelector('.canvas-viewport');
+    
+    if (hotspot && campaignBrief && canvasViewport) {
+        // Attach hotspot to canvas viewport so it moves with canvas
+        canvasViewport.appendChild(hotspot);
+        
+        // Position next to the campaign brief title in the card header
+        const briefRect = campaignBrief.getBoundingClientRect();
+        const viewportRect = canvasViewport.getBoundingClientRect();
+        
+        // Find the card title in the header
+        const cardTitle = campaignBrief.querySelector('.card-title');
+        const titleRect = cardTitle ? cardTitle.getBoundingClientRect() : briefRect;
+        
+        hotspot.style.position = 'absolute';
+        hotspot.style.top = (titleRect.top - viewportRect.top + titleRect.height / 2 - 7) + 'px'; // Center vertically with title
+        hotspot.style.left = (titleRect.right - viewportRect.left + 8) + 'px'; // Right next to title
+        hotspot.style.display = 'block';
+        
+        // Add canvas movement tracking
+        setupCampaignEditHotspotTracking(hotspot, campaignBrief);
+    }
+}
+
+
+
+function setupCampaignEditHotspotTracking(hotspot, campaignBrief) {
+    const updatePosition = () => {
+        if (hotspot.style.display === 'none') return;
+        
+        const viewportRect = document.querySelector('.canvas-viewport').getBoundingClientRect();
+        
+        // Find the card title in the header
+        const cardTitle = campaignBrief.querySelector('.card-title');
+        const titleRect = cardTitle ? cardTitle.getBoundingClientRect() : campaignBrief.getBoundingClientRect();
+        
+        // Update hotspot position next to campaign brief title
+        hotspot.style.top = (titleRect.top - viewportRect.top + titleRect.height / 2 - 7) + 'px'; // Center vertically with title
+        hotspot.style.left = (titleRect.right - viewportRect.left + 8) + 'px'; // Right next to title
+    };
+
+    // Track canvas movements
+    const canvasViewport = document.querySelector('.canvas-viewport');
+    
+    // Store the update function for cleanup
+    hotspot._updatePosition = updatePosition;
+    
+    // Listen for canvas transformations
+    const observer = new MutationObserver(updatePosition);
+    observer.observe(canvasViewport, {
+        attributes: true,
+        attributeFilter: ['style']
+    });
+    
+    // Store observer for cleanup
+    hotspot._observer = observer;
+}
+
+function hideCampaignEditHotspot() {
+    console.log('Hiding campaign edit hotspot...');
+    
+    const hotspot = document.getElementById('campaignEditHotspot');
+    if (hotspot) {
+        hotspot.style.display = 'none';
+        
+        // Clean up tracking
+        if (hotspot._observer) {
+            hotspot._observer.disconnect();
+            delete hotspot._observer;
+        }
+        if (hotspot._updatePosition) {
+            delete hotspot._updatePosition;
+        }
+        
+        // Move back to document body
+        document.body.appendChild(hotspot);
+    }
+}
+
+function selectCampaignBrief() {
+    console.log('Selecting campaign brief...');
+    
+    const campaignBrief = document.getElementById('generatedCampaignBrief');
+    const hotspot = document.getElementById('campaignEditHotspot');
+    
+    // Hide the hotspot
+    if (hotspot) {
+        hotspot.style.display = 'none';
+        
+        // Clean up tracking
+        if (hotspot._observer) {
+            hotspot._observer.disconnect();
+            delete hotspot._observer;
+        }
+        if (hotspot._updatePosition) {
+            delete hotspot._updatePosition;
+        }
+        
+        // Move back to document body
+        document.body.appendChild(hotspot);
+    }
+    
+    // Add selected class to campaign brief
+    if (campaignBrief) {
+        campaignBrief.classList.add('selected');
+    }
+    
+    // Add campaign brief pill to chat input
+    addCampaignBriefPillToChat();
+}
+
+// Instagram Posts Generation
+function generateInstagramPosts() {
+    console.log('Starting Instagram posts generation...');
+    
+    // Create Instagram posts section
+    const canvasContent = document.getElementById('canvasContent');
+    if (!canvasContent) return;
+    
+    // Create new section for Instagram posts
+    const instagramSection = document.createElement('section');
+    instagramSection.className = 'content-section social-media';
+    instagramSection.innerHTML = `
+        <div class="section-container">
+            <div class="asset-cards-row">
+                <div class="asset-card instagram-post generating" id="instagramPost1">
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <button class="icon-btn">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="1" y="1" width="12" height="12" rx="2" fill="#E1306C"/>
+                                </svg>
+                            </button>
+                            <span class="card-title">Instagram Post</span>
+                        </div>
+                        <div class="card-header-right">
+                            <button class="icon-btn">
+                                <svg viewBox="0 0 13 13" width="14" height="14">
+                                    <path d="M7.41667 5.08333L11.5 1M11.5 1H8M11.5 1V4.5M5.08333 7.41667L1 11.5M1 11.5H4.5M1 11.5L1 8" stroke="#374151" stroke-width="1.25" stroke-linecap="square"/>
+                                </svg>
+                            </button>
+                            <button class="icon-btn">
+                                <svg viewBox="0 0 3 12" width="14" height="14">
+                                    <circle cx="1.58333" cy="1.58333" r="0.58333" fill="#374151"/>
+                                    <circle cx="1.58333" cy="5.66667" r="0.58333" fill="#374151"/>
+                                    <circle cx="1.58333" cy="9.75" r="0.58333" fill="#374151"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="content-text" id="instagramContent1">
+                            <!-- Content will be generated dynamically -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="asset-card instagram-post generating" id="instagramPost2">
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <button class="icon-btn">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="1" y="1" width="12" height="12" rx="2" fill="#E1306C"/>
+                                </svg>
+                            </button>
+                            <span class="card-title">Instagram Post</span>
+                        </div>
+                        <div class="card-header-right">
+                            <button class="icon-btn">
+                                <svg viewBox="0 0 13 13" width="14" height="14">
+                                    <path d="M7.41667 5.08333L11.5 1M11.5 1H8M11.5 1V4.5M5.08333 7.41667L1 11.5M1 11.5H4.5M1 11.5L1 8" stroke="#374151" stroke-width="1.25" stroke-linecap="square"/>
+                                </svg>
+                            </button>
+                            <button class="icon-btn">
+                                <svg viewBox="0 0 3 12" width="14" height="14">
+                                    <circle cx="1.58333" cy="1.58333" r="0.58333" fill="#374151"/>
+                                    <circle cx="1.58333" cy="5.66667" r="0.58333" fill="#374151"/>
+                                    <circle cx="1.58333" cy="9.75" r="0.58333" fill="#374151"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="content-text" id="instagramContent2">
+                            <!-- Content will be generated dynamically -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="asset-card instagram-post generating" id="instagramPost3">
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <button class="icon-btn">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="1" y="1" width="12" height="12" rx="2" fill="#E1306C"/>
+                                </svg>
+                            </button>
+                            <span class="card-title">Instagram Post</span>
+                        </div>
+                        <div class="card-header-right">
+                            <button class="icon-btn">
+                                <svg viewBox="0 0 13 13" width="14" height="14">
+                                    <path d="M7.41667 5.08333L11.5 1M11.5 1H8M11.5 1V4.5M5.08333 7.41667L1 11.5M1 11.5H4.5M1 11.5L1 8" stroke="#374151" stroke-width="1.25" stroke-linecap="square"/>
+                                </svg>
+                            </button>
+                            <button class="icon-btn">
+                                <svg viewBox="0 0 3 12" width="14" height="14">
+                                    <circle cx="1.58333" cy="1.58333" r="0.58333" fill="#374151"/>
+                                    <circle cx="1.58333" cy="5.66667" r="0.58333" fill="#374151"/>
+                                    <circle cx="1.58333" cy="9.75" r="0.58333" fill="#374151"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="content-text" id="instagramContent3">
+                            <!-- Content will be generated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Add to canvas content
+    canvasContent.appendChild(instagramSection);
+    
+    // Pan canvas to show Instagram posts
+    setTimeout(() => {
+        panToInstagramPosts();
+    }, 500);
+    
+    // Generate content for each Instagram post
+    const instagramPosts = [
+        `🎉🐾 Summer just got tastier for your furry friends!  
+Introducing Whisker & Tails' limited-edition Summer of Sniffs flavors! 🌞  
+🐱 Grilled Salmon Picnic for cats  
+🐶 BBQ Chicken Feast for dogs  
+Made with all-natural, human-grade ingredients and served up in eco-friendly packaging, these recipes are vet-approved to bring health and joy to every meal. 🌿❤️  
+✨ Share the love! Try the new flavors and tag us with your pet's reaction using #SummerOfSniffs — your fur-baby might just steal the show! 🐕🐈  
+📸 What are you waiting for? Delicious memories are just a sniff away!  
+#WhiskerAndTails #PetJoy #LimitedEdition #TreatYourPets #EcoFriendly`,
+        
+        `🌍🐾 Care for your pet, care for the planet!  
+At Whisker & Tails, we're not just serving up delicious, pet-approved meals like our Summer of Sniffs flavors — Grilled Salmon Picnic for cats and BBQ Chicken Feast for dogs 🐱🐶 — but we're also serving up a promise to the environment.  
+Our eco-friendly packaging is made with sustainable materials, so you can feel good knowing that every meal for your furry friend helps protect the planet we all love. 🌿💚  
+✨ Join us! Share your eco-friendly pet care tips using #EcoFriendlyPets and inspire others to make a positive impact for both their pets and the Earth.  
+Because creating a better future starts with the choices we make today — for us, for them, and for generations to come. 🐾💡🌎  
+#WhiskerAndTails #SustainableLiving #PetCareWithPurpose #SummerOfSniffs #EcoFriendly`,
+        
+        `🌎🐾 Small choices make a big impact!  
+At Whisker & Tails, we believe in pampering your pets while protecting the planet. That's why our Summer of Sniffs limited-edition meals — Grilled Salmon Picnic for cats and BBQ Chicken Feast for dogs 🐱🐶 — come in eco-friendly, sustainable packaging.  
+Every purchase helps reduce waste and ensures a healthier future for our furry friends and their humans. 🌿💚 Together, we can create a world that's as kind to the Earth as it is to your pets!  
+✨ Your voice matters! Share your thoughts on sustainability and how you're making greener choices for your pets by tagging us with #WhiskerAndTails.  
+Because a brighter future starts with all of us. 🐾🌞  
+#WhiskerAndTails #SustainableChoices #PetCareForPlanet #EcoFriendlyPets #SummerOfSniffs`
+    ];
+    
+    // Generate each Instagram post with delay
+    instagramPosts.forEach((content, index) => {
+        setTimeout(() => {
+            generateInstagramPostContent(index + 1, content);
+        }, (index + 1) * 1000);
+    });
+}
+
+function generateInstagramPostContent(postNumber, content) {
+    const contentDiv = document.getElementById(`instagramContent${postNumber}`);
+    const postCard = document.getElementById(`instagramPost${postNumber}`);
+    
+    if (!contentDiv || !postCard) return;
+    
+    // Split content into paragraphs
+    const paragraphs = content.split('\n').filter(p => p.trim());
+    
+    let currentIndex = 0;
+    
+    function addNextParagraph() {
+        if (currentIndex >= paragraphs.length) {
+            // Remove generating class and shimmer effect
+            postCard.classList.remove('generating');
+            
+            // Show completion message for last post
+            if (postNumber === 3) {
+                setTimeout(() => {
+                    const lastMessage = document.querySelector('.jasper-message-container:last-child');
+                    if (lastMessage && lastMessage.classList.contains('jasper-message-container')) {
+                        lastMessage.remove();
+                    }
+                    
+                    addJasperCompletionMessage(
+                        "Instagram posts created",
+                        "I've created 3 instagram posts with targeted mesaging that aligns with your campaign strategy. Each post highlights different aspects of your Summer of Sniffs campaign.<br><br>Next steps you might consider:<br>• Create an SEO optimized blog post using Jasper App"
+                    );
+                    
+                    // Show the apps automation hotspot after Instagram posts are completed
+                    setTimeout(() => {
+                        showAppsAutomationHotspot();
+                    }, 1000);
+                }, 300);
+            }
+            return;
+        }
+        
+        const paragraph = paragraphs[currentIndex];
+        const element = document.createElement('p');
+        element.textContent = paragraph;
+        element.style.fontSize = '14px';
+        element.style.lineHeight = '1.5';
+        element.style.marginBottom = '12px';
+        element.style.color = '#374151';
+        
+        contentDiv.appendChild(element);
+        currentIndex++;
+        
+        // Add delay before next paragraph
+        setTimeout(addNextParagraph, 300);
+    }
+    
+    // Start the process
+    addNextParagraph();
+}
+
+function panToInstagramPosts() {
+    const viewport = document.querySelector('.canvas-viewport');
+    if (!viewport) return;
+    
+    // Get current transform values
+    const currentTransform = viewport.style.transform || 'translate(400px, 200px) scale(1.2)';
+    const transformMatch = currentTransform.match(/translate\(([^,]+),\s*([^)]+)\)/);
+    const scaleMatch = currentTransform.match(/scale\(([^)]+)\)/);
+    
+    let currentY = transformMatch ? parseFloat(transformMatch[2]) || 200 : 200;
+    let currentScale = scaleMatch ? parseFloat(scaleMatch[1]) || 1.2 : 1.2;
+    
+    // Pan right to show Instagram posts (move left in transform coordinates)
+    const newX = -200; // Move further left to show Instagram posts next to campaign brief
+    
+    // Apply new transform
+    viewport.style.transform = `translate(${newX}px, ${currentY}px) scale(${currentScale})`;
+    
+    console.log('Panned canvas to show Instagram posts');
+}
+
+// Apps Automation Hotspot Functions
+function showAppsAutomationHotspot() {
+    console.log('Showing apps automation hotspot...');
+    
+    const hotspot = document.getElementById('appsAutomationHotspot');
+    const cubeBtn = document.querySelector('.action-bar .cube-btn');
+    
+    console.log('Hotspot element:', hotspot);
+    console.log('Cube button element:', cubeBtn);
+    
+    if (!hotspot || !cubeBtn) {
+        console.log('Hotspot or cube button not found');
+        console.log('Available action buttons:', document.querySelectorAll('.action-bar .action-btn'));
+        return;
+    }
+    
+    // Position the hotspot over the cube button
+    const cubeBtnRect = cubeBtn.getBoundingClientRect();
+    console.log('Cube button rect:', cubeBtnRect);
+    
+    const centerX = cubeBtnRect.left + cubeBtnRect.width / 2;
+    const centerY = cubeBtnRect.top + cubeBtnRect.height / 2;
+    
+    console.log('Positioning hotspot at:', centerX, centerY);
+    
+    hotspot.style.left = centerX + 'px';
+    hotspot.style.top = centerY + 'px';
+    hotspot.style.transform = 'translate(-50%, -50%)';
+    
+    // Show the hotspot
+    hotspot.style.display = 'block';
+    console.log('Hotspot should now be visible');
+    
+    // Set up tracking for canvas movement
+    setupAppsAutomationHotspotTracking(hotspot, cubeBtn);
+}
+
+function setupAppsAutomationHotspotTracking(hotspot, cubeBtn) {
+    const updatePosition = () => {
+        const cubeBtnRect = cubeBtn.getBoundingClientRect();
+        const centerX = cubeBtnRect.left + cubeBtnRect.width / 2;
+        const centerY = cubeBtnRect.top + cubeBtnRect.height / 2;
+        
+        hotspot.style.left = centerX + 'px';
+        hotspot.style.top = centerY + 'px';
+        hotspot.style.transform = 'translate(-50%, -50%)';
+    };
+    
+    // Store the update function
+    hotspot._updatePosition = updatePosition;
+    
+    // Set up mutation observer for canvas changes
+    const observer = new MutationObserver(updatePosition);
+    observer.observe(document.body, { 
+        childList: true, 
+        subtree: true, 
+        attributes: true, 
+        attributeFilter: ['style', 'class'] 
+    });
+    
+    hotspot._observer = observer;
+}
+
+function hideAppsAutomationHotspot() {
+    console.log('Hiding apps automation hotspot...');
+    
+    const hotspot = document.getElementById('appsAutomationHotspot');
+    if (hotspot) {
+        hotspot.style.display = 'none';
+        
+        // Clean up tracking
+        if (hotspot._observer) {
+            hotspot._observer.disconnect();
+            delete hotspot._observer;
+        }
+        if (hotspot._updatePosition) {
+            delete hotspot._updatePosition;
+        }
+    }
+}
+
+// Share Button Hotspot Functions
+function showShareButtonHotspot() {
+    console.log('Showing share button hotspot...');
+    
+    const hotspot = document.getElementById('shareButtonHotspot');
+    const shareBtn = document.querySelector('.header-right .share-btn');
+    
+    console.log('Share hotspot element:', hotspot);
+    console.log('Share button element:', shareBtn);
+    
+    if (!hotspot || !shareBtn) {
+        console.log('Share hotspot or share button not found');
+        return;
+    }
+    
+    // Position the hotspot over the share button
+    const shareBtnRect = shareBtn.getBoundingClientRect();
+    console.log('Share button rect:', shareBtnRect);
+    
+    const centerX = shareBtnRect.left + shareBtnRect.width / 2;
+    const centerY = shareBtnRect.top + shareBtnRect.height / 2;
+    
+    console.log('Positioning share hotspot at:', centerX, centerY);
+    
+    hotspot.style.left = centerX + 'px';
+    hotspot.style.top = centerY + 'px';
+    hotspot.style.transform = 'translate(-50%, -50%)';
+    
+    // Show the hotspot
+    hotspot.style.display = 'block';
+    console.log('Share hotspot should now be visible');
+    
+    // Set up tracking for canvas movement
+    setupShareButtonHotspotTracking(hotspot, shareBtn);
+}
+
+function setupShareButtonHotspotTracking(hotspot, shareBtn) {
+    const updatePosition = () => {
+        const shareBtnRect = shareBtn.getBoundingClientRect();
+        const centerX = shareBtnRect.left + shareBtnRect.width / 2;
+        const centerY = shareBtnRect.top + shareBtnRect.height / 2;
+        
+        hotspot.style.left = centerX + 'px';
+        hotspot.style.top = centerY + 'px';
+        hotspot.style.transform = 'translate(-50%, -50%)';
+    };
+    
+    // Store the update function
+    hotspot._updatePosition = updatePosition;
+    
+    // Set up mutation observer for canvas changes
+    const observer = new MutationObserver(updatePosition);
+    observer.observe(document.body, { 
+        childList: true, 
+        subtree: true, 
+        attributes: true, 
+        attributeFilter: ['style', 'class'] 
+    });
+    
+    hotspot._observer = observer;
+}
+
+function hideShareButtonHotspot() {
+    console.log('Hiding share button hotspot...');
+    
+    const hotspot = document.getElementById('shareButtonHotspot');
+    if (hotspot) {
+        hotspot.style.display = 'none';
+        
+        // Clean up tracking
+        if (hotspot._observer) {
+            hotspot._observer.disconnect();
+            delete hotspot._observer;
+        }
+        if (hotspot._updatePosition) {
+            delete hotspot._updatePosition;
+        }
+    }
+}
+
+function goToShareHotspot() {
+    console.log('Going from apps hotspot to share hotspot...');
+    
+    // Hide the apps automation hotspot
+    hideAppsAutomationHotspot();
+    
+    // Show the share button hotspot after a brief delay
+    setTimeout(() => {
+        showShareButtonHotspot();
+    }, 300);
+}
+
+// Test function for debugging - call this in console
+function testAppsHotspot() {
+    console.log('Testing apps automation hotspot...');
+    showAppsAutomationHotspot();
+}
+
+function testShareHotspot() {
+    console.log('Testing share button hotspot...');
+    showShareButtonHotspot();
+}
+
+// Make test function globally available
+window.testAppsHotspot = testAppsHotspot;
+window.testShareHotspot = testShareHotspot;
+window.showAppsAutomationHotspot = showAppsAutomationHotspot;
+window.hideAppsAutomationHotspot = hideAppsAutomationHotspot;
+window.showShareButtonHotspot = showShareButtonHotspot;
+window.hideShareButtonHotspot = hideShareButtonHotspot;
+window.goToShareHotspot = goToShareHotspot;
 
 
 
