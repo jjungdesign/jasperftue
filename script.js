@@ -73,6 +73,9 @@ let currentX = 400;
 let currentY = 200;
 let scale = 1.2;
 
+// Hotspot state tracking
+let shouldShowCampaignEditAfterModalClose = false;
+
 function initializeCanvas() {
     const canvasContainer = document.getElementById('canvasContainer');
     const canvasViewport = document.getElementById('canvasViewport');
@@ -1175,16 +1178,22 @@ function showAgentsMenu(button) {
 }
 
 function showProjectSettings() {
+    // Store the flag state before hiding tooltips
+    const wasFromSettingsHotspot = shouldShowCampaignEditAfterModalClose;
+    
+    // Clear flag temporarily to prevent immediate 2nd hotspot in hideSettingsHotspot()
+    shouldShowCampaignEditAfterModalClose = false;
+    
     // Hide tooltips if they're visible
     hideSettingsHotspot();
     hideCampaignEditHotspot();
     hideAppsAutomationHotspot();
     hideShareButtonHotspot();
     
-    // Show campaign edit hotspot after project settings opens
-    setTimeout(() => {
-        showCampaignEditHotspot();
-    }, 500);
+    // Restore flag for modal close if user came from settings hotspot
+    if (wasFromSettingsHotspot) {
+        shouldShowCampaignEditAfterModalClose = true;
+    }
     
     // Check if modal is already open - if so, keep it open
     if (document.querySelector('.project-settings-modal')) {
@@ -1458,7 +1467,17 @@ function closeProjectSettings() {
     if (modal) {
         modal.style.opacity = '0';
         modal.style.transform = 'translateX(-50%) translateY(-20px)';
-        setTimeout(() => modal.remove(), 200);
+        setTimeout(() => {
+            modal.remove();
+            
+            // Check if we should show campaign edit hotspot after modal closes
+            if (shouldShowCampaignEditAfterModalClose) {
+                shouldShowCampaignEditAfterModalClose = false; // Reset flag
+                setTimeout(() => {
+                    showCampaignEditHotspot();
+                }, 300);
+            }
+        }, 200);
     }
 }
 
@@ -3252,6 +3271,8 @@ function showSettingsHotspot() {
     const tooltipContainer = document.getElementById('settingsHotspot');
     if (tooltipContainer) {
         tooltipContainer.style.display = 'block';
+        // Set flag so we know to show campaign edit hotspot later
+        shouldShowCampaignEditAfterModalClose = true;
     }
 }
 
@@ -3262,10 +3283,14 @@ function hideSettingsHotspot() {
     if (tooltipContainer) {
         tooltipContainer.style.display = 'none';
         
-        // Show campaign edit hotspot after settings tooltip is dismissed
-        setTimeout(() => {
-            showCampaignEditHotspot();
-        }, 500);
+        // Only show campaign edit hotspot if user clicked "Got it" (flag still true)
+        // If they opened project settings, the flag will be false
+        if (shouldShowCampaignEditAfterModalClose) {
+            shouldShowCampaignEditAfterModalClose = false; // Reset flag
+            setTimeout(() => {
+                showCampaignEditHotspot();
+            }, 500);
+        }
     }
 }
 
