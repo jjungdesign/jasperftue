@@ -3901,6 +3901,14 @@ window.showShareButtonHotspot = showShareButtonHotspot;
 window.hideShareButtonHotspot = hideShareButtonHotspot;
 window.goToShareHotspot = goToShareHotspot;
 
+// Navigation functions
+function goBackToWelcome() {
+    window.location.href = 'welcome.html';
+}
+
+// Make navigation function globally available
+window.goBackToWelcome = goBackToWelcome;
+
 
 
 
