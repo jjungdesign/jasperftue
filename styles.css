@@ -2203,7 +2203,7 @@ body {
     position: absolute;
     top: 60px;
     left: 50%;
-    transform: translateX(calc(-50% - 50px));
+    transform: translateX(calc(-50% - 100px));
     min-width: 260px;
     max-width: 340px;
     animation: none !important;
