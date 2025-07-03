@@ -3903,7 +3903,7 @@ window.goToShareHotspot = goToShareHotspot;
 
 // Navigation functions
 function goBackToWelcome() {
-    window.location.href = 'welcome.html';
+    window.location.href = 'index.html';
 }
 
 // Make navigation function globally available
