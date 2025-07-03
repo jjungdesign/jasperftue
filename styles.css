@@ -504,7 +504,11 @@ body {
     vertical-align: top;
     box-sizing: border-box;
     margin-bottom: 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
+
+
 
 .input-field::placeholder {
     color: #9CA3AF;
@@ -617,7 +621,10 @@ body {
     background: #F3F4F6;
     color: #9CA3AF;
     cursor: not-allowed;
+    opacity: 0.5;
 }
+
+
 
 /* Hide old greeting styles */
 .jasper-greeting {

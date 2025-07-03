@@ -345,33 +345,47 @@ function initializeChat() {
             this.parentElement.style.borderColor = '#E5E7EB';
         });
         
+        // Enhanced Enter key handling for campaign brief pill submission
         inputField.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault(); // Prevent default to avoid newline
+                handleChatSubmission();
+            }
+        });
+        
+        // Also handle keydown for more reliable Enter key detection
+        inputField.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault(); // Prevent default to avoid newline
+                handleChatSubmission();
             }
         });
     }
     
-    // Input buttons
+    // Input buttons (attachment, etc.)
     inputButtons.forEach(btn => {
         btn.addEventListener('click', function() {
-            if (btn.classList.contains('send-btn')) {
-                sendMessage();
-            } else {
-                const svg = btn.querySelector('svg');
-                const path = svg?.querySelector('path');
-                const pathData = path?.getAttribute('d') || '';
-                
-                if (pathData.includes('M8 3v10M3 8h10')) {
-                    console.log('Add attachment clicked');
-                    showToast('Add attachment');
-                } else if (pathData.includes('M8 2v12M2 8h12')) {
-                    console.log('Add content clicked');
-                    showToast('Add content');
-                }
+            const svg = btn.querySelector('svg');
+            const path = svg?.querySelector('path');
+            const pathData = path?.getAttribute('d') || '';
+            
+            if (pathData.includes('M8 3v10M3 8h10')) {
+                console.log('Add attachment clicked');
+                showToast('Add attachment');
+            } else if (pathData.includes('M8 2v12M2 8h12')) {
+                console.log('Add content clicked');
+                showToast('Add content');
             }
         });
     });
+    
+    // Send button (separate handling)
+    if (sendBtn) {
+        sendBtn.addEventListener('click', function() {
+            console.log('Send button clicked');
+            handleChatSubmission();
+        });
+    }
 }
 
 function initializeCards() {
@@ -647,6 +661,53 @@ function sendMessage() {
                 addMessageToChat('Jasper', randomResponse, true);
             }, 1000);
         }
+    }
+}
+
+function handleChatSubmission() {
+    console.log('handleChatSubmission called');
+    
+    const input = document.querySelector('.input-field');
+    const campaignBriefPill = document.querySelector('.context-pill-demo');
+    const sendBtn = document.querySelector('.send-btn');
+    
+    // Prevent multiple submissions
+    if (sendBtn && sendBtn.disabled) {
+        return;
+    }
+    
+    // Check if we have content to send
+    let canSubmit = false;
+    let message = '';
+    
+    if (input && input.value.trim()) {
+        message = input.value.trim();
+        canSubmit = true;
+    } else if (campaignBriefPill && input && input.placeholder) {
+        // Allow submission using placeholder text when campaign brief is selected
+        message = input.placeholder;
+        canSubmit = true;
+    }
+    
+    if (canSubmit && message) {
+        console.log('Submitting message:', message);
+        
+        // Temporarily disable the send button to prevent double submissions
+        if (sendBtn) {
+            sendBtn.disabled = true;
+        }
+        
+        // Call the existing sendMessage function
+        sendMessage();
+        
+        // Re-enable the send button after a short delay
+        setTimeout(() => {
+            if (sendBtn) {
+                sendBtn.disabled = false;
+            }
+        }, 500);
+    } else {
+        console.log('No content to submit');
     }
 }
 
@@ -2003,6 +2064,8 @@ function addCampaignBriefPillToChat() {
             removeCampaignBriefPill();
         });
     }
+    
+
 }
 
 function removeCampaignBriefPill() {
@@ -3837,6 +3900,7 @@ window.hideAppsAutomationHotspot = hideAppsAutomationHotspot;
 window.showShareButtonHotspot = showShareButtonHotspot;
 window.hideShareButtonHotspot = hideShareButtonHotspot;
 window.goToShareHotspot = goToShareHotspot;
+
 
 
 
