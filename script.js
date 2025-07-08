@@ -1364,7 +1364,7 @@ function showProjectSettings() {
                         cursor: pointer;
                         height: 32px;
                     ">
-                        <option>Advertisements</option>
+                        <option>Pet Parents</option>
                         <option>Blog Posts</option>
                         <option>Social Media</option>
                         <option>Email Marketing</option>
@@ -1383,7 +1383,7 @@ function showProjectSettings() {
                         cursor: pointer;
                         height: 32px;
                     ">
-                        <option>Content Creators</option>
+                        <option>Adventurous Millennial Pet Parents</option>
                         <option>Marketing Professionals</option>
                         <option>Small Business Owners</option>
                         <option>Enterprise Teams</option>
