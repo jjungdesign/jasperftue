@@ -3039,7 +3039,7 @@ function startGenerationExperience() {
     }
     
     // Add user's project goal message
-    addUserMessage("The goal of this project is a summer-themed marketing push promoting Whisker & Tails' new limited-edition seasonal flavors like \"Grilled Salmon Picnic\" (for cats) and \"BBQ Chicken Feast\" (for dogs). The campaign encourages pet parents to create fun, memorable summer moments with their pets, showcasing these new flavors as part of the experience.");
+    addUserMessage("The goal of this project is a summer-themed marketing push promoting Whisker & Tails' new limited-edition seasonal flavors like \"Grilled Salmon Picnic\" (for cats) and \"BBQ Chicken Feast\" (for dogs). The campaign encourages pet parents to create fun, memorable summer moments with their pets, showcasing these new flavors as part of the experience.\n\nThe target audience is Adventurous Millennial Pet Parents. Please use the Pet Parents Brand Voice and reference consumer_insights_report to guide your writing.");
     
     // Add Jasper's loading response after a short delay
     setTimeout(() => {
