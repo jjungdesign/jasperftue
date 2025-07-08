@@ -28,17 +28,17 @@
         }
         
         .loader {
-            width: 200px;
-            height: 4px;
+            width: 100px;
+            height: 2px;
             margin: 0 auto 32px;
-            border-radius: 2px;
+            border-radius: 1px;
             overflow: hidden;
             background: #f3f4f6;
             position: relative;
         }
         
         .loader-track {
-            width: 400px;
+            width: 200px;
             height: 100%;
             display: flex;
             animation: slide 2s linear infinite;
@@ -49,23 +49,23 @@
             flex-shrink: 0;
         }
         
-        .color-block:nth-child(1) { width: 40px; background: #1e3a8a; } /* Navy blue */
-        .color-block:nth-child(2) { width: 40px; background: #ea580c; } /* Orange */
-        .color-block:nth-child(3) { width: 40px; background: #ec4899; } /* Pink */
-        .color-block:nth-child(4) { width: 40px; background: #facc15; } /* Yellow */
-        .color-block:nth-child(5) { width: 40px; background: #22c55e; } /* Green */
-        .color-block:nth-child(6) { width: 40px; background: #3b82f6; } /* Blue */
-        .color-block:nth-child(7) { width: 40px; background: #f97316; } /* Orange variant */
-        .color-block:nth-child(8) { width: 40px; background: #d946ef; } /* Purple */
-        .color-block:nth-child(9) { width: 40px; background: #06b6d4; } /* Cyan */
-        .color-block:nth-child(10) { width: 40px; background: #84cc16; } /* Lime */
+        .color-block:nth-child(1) { width: 20px; background: #ff6b6b; } /* Red */
+        .color-block:nth-child(2) { width: 20px; background: #ff8cc8; } /* Pink */
+        .color-block:nth-child(3) { width: 20px; background: #ffd93d; } /* Yellow */
+        .color-block:nth-child(4) { width: 20px; background: #a8e6cf; } /* Light green */
+        .color-block:nth-child(5) { width: 20px; background: #51cf66; } /* Green */
+        .color-block:nth-child(6) { width: 20px; background: #74c0fc; } /* Light blue */
+        .color-block:nth-child(7) { width: 20px; background: #339af0; } /* Blue */
+        .color-block:nth-child(8) { width: 20px; background: #ff6b6b; } /* Red (repeat) */
+        .color-block:nth-child(9) { width: 20px; background: #ff8cc8; } /* Pink (repeat) */
+        .color-block:nth-child(10) { width: 20px; background: #ffd93d; } /* Yellow (repeat) */
         
         @keyframes slide {
             0% {
                 transform: translateX(0);
             }
             100% {
-                transform: translateX(-200px);
+                transform: translateX(-100px);
             }
         }
         
